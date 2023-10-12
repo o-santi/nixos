@@ -20,7 +20,22 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs self; };
         modules = [
-          ./configuration.nix
+          ./hosts/hanekawa/configuration.nix
+          ./gnome.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.leonardo = import ./home.nix;
+          }
+        ];
+      };
+      kunagisa = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs self; };
+        modules = [
+          ./hosts/kunagisa/configuration.nix
           ./gnome.nix
           home-manager.nixosModules.home-manager
           {
