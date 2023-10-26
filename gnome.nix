@@ -2,9 +2,8 @@
 
 {
   config = {
-
     environment.systemPackages = with pkgs; [
-      gnomeExtensions.tray-icons-reloaded
+      gnomeExtensions.appindicator
       gnomeExtensions.vitals
       gnomeExtensions.user-themes
       gnomeExtensions.blur-my-shell
@@ -31,6 +30,13 @@
       hitori # sudoku game
       atomix # puzzle game
     ]);
+    services.xserver = {
+      displayManager.gdm = {
+        enable = true;
+        wayland = false;
+      };
+      desktopManager.gnome.enable = true;
+    };
     services.gnome.gnome-browser-connector.enable = true;
     programs.dconf.enable = true;
 

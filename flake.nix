@@ -11,42 +11,28 @@
       url = "github:o-santi/emacs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs : {
-    nixosConfigurations = {
-      hanekawa = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs self; };
+  outputs = { self, nixpkgs, home-manager, emacs, ... } @ inputs :
+    let
+      system = "x86_64-linux";
+      hosts = [
+        "hanekawa" # notebook
+        "kunagisa" # workstation
+      ];
+      defaultNixosSystem = host: nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/hanekawa/configuration.nix
-          ./gnome.nix
+          ./hosts/${host}/configuration.nix
+          ./users/leonardo.nix
+          # ./exwm.nix
           home-manager.nixosModules.home-manager
-          {
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.leonardo = import ./home.nix;
-          }
         ];
       };
-      kunagisa = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs self; };
-        modules = [
-          ./hosts/kunagisa/configuration.nix
-          ./gnome.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.leonardo = import ./home.nix;
-          }
-        ];
-      };
+    in {
+      nixosConfigurations = builtins.listToAttrs 
+        (map (host: {name = host; value = defaultNixosSystem host; }) hosts)
+      ;
     };
-
-  };
 }

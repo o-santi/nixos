@@ -8,7 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./s3nixcache-mixrank.nix
+      ../../s3nixcache-mixrank.nix
     ];
 
   # Bootloader.
@@ -16,8 +16,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "hanekawa"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -36,11 +34,6 @@
     enable = true;
     layout = "br";
     xkbVariant = "";
-    displayManager.gdm = {
-      enable = true;
-      wayland = false;
-    };
-    desktopManager.gnome.enable = true;
   };
 
   # Configure console keymap
@@ -67,11 +60,11 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
+  services.xserver.libinput.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.leonardo = {
     isNormalUser = true;
+    initialPassword = "";
     description = "leonardo";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
