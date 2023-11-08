@@ -5,8 +5,11 @@
     inputs.emacs.nixosModules.x86_64-linux.default
   ];
   config = {
-    programs.zsh.enable = true;
-
+    programs.bash = {
+      vteIntegration = true;
+      enableLsColors = true;
+      enableCompletion = true;
+    };
     fonts = {
       fontconfig.enable = true;
       packages = [(pkgs.nerdfonts.override { fonts = [ "Iosevka" "FiraCode" ]; })];
@@ -22,13 +25,23 @@
     programs.ssh = {
       forwardX11 = true;
       startAgent = true;
+      extraConfig = ''
+        Host github.com
+        IdentityFile ~/.ssh/github
+        StrictHostKeyChecking no
+
+        Host gitlab.com
+        IdentityFile ~/.ssh/gitlab
+        IdentitiesOnly yes
+        StrictHostKeyChecking no
+      '';
     };
 
     users.users.leonardo = {
       isNormalUser = true;
       description = "leonardo";
       extraGroups = [ "networkmanager" "wheel" ];
-      shell = pkgs.zsh;
+      shell = pkgs.bashInteractive;
     };
     
     home-manager = {
@@ -47,34 +60,32 @@
           ];
         };
         programs = {
-          zsh = {
+          bash = {
             enable = true;
-            oh-my-zsh = {
-              enable = true;
-              plugins = [
-                "sudo"
-                "git"
-                "fzf"
-                "rust"
-              ];
-            };
+            enableVteIntegration = true;
+            enableCompletion = true;
+            initExtra = ''
+              shopt -s -q autocd
+              shopt -s no_empty_cmd_completion
+            '';
+          };
+          oh-my-posh = {
+            enable = true;
+            enableBashIntegration = true;
+            useTheme = "catppuccin";
           };
           fzf = {
             enable = true;
-            enableZshIntegration = true;
-          };
-          starship = {
-            enable = true;
-            enableZshIntegration = true;
+            enableBashIntegration = true;
           };
           direnv = {
             enable = true;
-            enableZshIntegration = true;
+            enableBashIntegration = true;
             nix-direnv.enable = true;
           };
           kitty = {
             enable = true;
-            shellIntegration.enableZshIntegration = true;
+            shellIntegration.enableBashIntegration = true;
             settings = {
               enable_audio_bell = false;
               background_opacity = "0.7";

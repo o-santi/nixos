@@ -37,7 +37,10 @@
       };
       desktopManager.gnome.enable = true;
     };
-    services.gnome.gnome-browser-connector.enable = true;
+    services.gnome = {
+      gnome-browser-connector.enable = true;
+      gnome-keyring.enable = true;
+    };
     programs.dconf.enable = true;
 
     home-manager.extraSpecialArgs = { inherit inputs; };
