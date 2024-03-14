@@ -18,7 +18,13 @@ let
   );
   config-el = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./README.org));
   emacs = (pkgs.emacsWithPackagesFromUsePackage {
-    package = pkgs.emacs.override { withGTK3 = true; };
+    package = pkgs.emacs.override {
+      withGTK3 = true;
+      withNativeCompilation = true;
+      withAlsaLib = true;
+      withSystemd = true;
+      withToolkitScrollBars = true;
+    };
     config = config-el; 
     alwaysEnsure = true;
     defaultInitFile = true;
