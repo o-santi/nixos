@@ -110,7 +110,7 @@
         group = "100";
       };
     };
-    
+    services.gnome.gnome-browser-connector.enable = true;
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
@@ -127,12 +127,17 @@
             slack
             whatsapp-for-linux
             telegram-desktop
-            firefox
           ];
         };
+        
         programs = {
           firefox = {
             enable = true;
+            package = pkgs.firefox.override {  # nixpkgs' firefox/wrapper.nix
+              nativeMessagingHosts = [
+                pkgs.gnome-browser-connector
+              ];
+            };
             profiles.leonardo = {
               userChrome = ''
                 @import "firefox-gnome-theme/userChrome.css";
@@ -145,6 +150,31 @@
                 "browser.uidensity" = 0; # Set UI density to normal
                 "svg.context-properties.content.enabled" = true; # Enable SVG context-propertes
                 "browser.theme.dark-private-windows" = false; # Disable private window dark theme
+              };
+            };
+            policies = {
+              DisableTelemetry = true;
+              DisableFirefoxStudies = true;
+              EnableTrackingProtection = {
+                Value= true;
+                Locked = true;
+                Cryptomining = true;
+                Fingerprinting = true;
+              };
+              DisablePocket = true;
+              DisableFirefoxAccounts = true;
+              DisableAccounts = true;
+              DisableFirefoxScreenshots = true;
+              OverrideFirstRunPage = "";
+              OverridePostUpdatePage = "";
+              DontCheckDefaultBrowser = true;
+              ExtensionSettings = {
+                "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
+                # uBlock Origin:
+                "uBlock0@raymondhill.net" = {
+                  install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+                  installation_mode = "force_installed";
+                };
               };
             };
           };
