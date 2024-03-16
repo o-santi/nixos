@@ -73,7 +73,6 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.leonardo = {
     isNormalUser = true;
-    initialPassword = "";
     description = "leonardo";
     extraGroups = [ "networkmanager" "wheel" ];
   };
