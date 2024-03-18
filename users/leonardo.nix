@@ -149,7 +149,11 @@
                 "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable customChrome.cs
                 "browser.uidensity" = 0; # Set UI density to normal
                 "svg.context-properties.content.enabled" = true; # Enable SVG context-propertes
-                "browser.theme.dark-private-windows" = false; # Disable private window dark theme
+                # firefox-gnome-theme
+                "gnomeTheme.activeTabContrast" = true;
+                "gnomeTheme.hideWebrtcIndicator" = true;
+                "gnomeTheme.bookmarksToolbarUnderTabs" = true;
+                "gnomeTheme.hideSingleTab" = true;
               };
             };
             policies = {

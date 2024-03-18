@@ -45,7 +45,24 @@
       ];
     };
     "org/gnome/shell/extensions/user-theme".name = "Orchis-Purple-Dark";
-    "org/gnome/shell/extensions/blur-my-shell/applications".whitelist = ["Emacs"];
+    "org/gnome/shell/extensions/blur-my-shell" = {
+      brightness=0.64000000000000001;
+      color-and-noise=false;
+      hacks-level=3;
+      noise-amount=0.0;
+      noise-lightness=0.0;
+      sigma=43;
+    };
+    "org/gnome/shell/extensions/blur-my-shell/applications" = {
+      blur=true;
+      blur-on-overview=false;
+      brightness=0.80000000000000004;
+      customize=false;
+      enable-all=false;
+      opacity=255;
+      sigma=10;
+      whitelist = ["Emacs"];
+    };
     "org/honem/shell/extensions/vitals" = {
       hide-zeros = true;
       position-in-panel = "0";
