@@ -26,6 +26,7 @@
       vitals
       user-themes
       blur-my-shell
+      x11-gestures
     ]);
 
     environment.gnome.excludePackages = (with pkgs; [

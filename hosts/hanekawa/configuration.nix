@@ -29,6 +29,7 @@
   i18n.defaultLocale = "pt_BR.UTF-8";
 
   # Enable the X11 windowing system.
+  services.touchegg.enable = true;
   services.xserver = {
     enable = true;
     layout = "br";
@@ -37,6 +38,7 @@
       enable = true;
       touchpad = {
         tapping = true;
+        scrollMethod = "twofinger";
         clickMethod = "clickfinger";
         tappingButtonMap = "lrm";
       };
