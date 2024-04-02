@@ -1,14 +1,14 @@
 { pkgs, inputs, ...}:
 let
-  outside-emacs = [
-    (pkgs.python3.withPackages (p: (with p; [
+  outside-emacs = with pkgs; [
+    (python3.withPackages (p: (with p; [
       python-lsp-server
       python-lsp-ruff
       pylsp-mypy
     ])))
-    pkgs.nil
-    pkgs.rust-analyzer
-    pkgs.parallel
+    nil
+    rust-analyzer
+    parallel
   ];
   org-tangle-elisp-blocks = (pkgs.callPackage ./org.nix {inherit pkgs; from-elisp = inputs.from-elisp;}).org-tangle ({ language, flags } :
     let is-elisp = (language == "emacs-lisp") || (language == "elisp");

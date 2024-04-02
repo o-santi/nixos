@@ -255,6 +255,13 @@ Try to use the package.
 (use-package markdown-mode
   :mode "\\.md\\'")
 #+end_src
+** Coq
+#+begin_src emacs-lisp :tangle yes
+(use-package proof-general
+  :mode "\\.md\\'")
+(use-package company-coq
+  :hook (coq-mode . company-coq-mode))
+#+end_src
 * Personal
 ** Org mode
 #+begin_src emacs-lisp :tangle yes

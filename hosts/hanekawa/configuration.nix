@@ -32,8 +32,8 @@
   services.touchegg.enable = true;
   services.xserver = {
     enable = true;
-    layout = "br";
-    xkbVariant = "";
+    xkb.layout = "br";
+    xkb.variant = "";
     libinput = {
       enable = true;
       touchpad = {

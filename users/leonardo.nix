@@ -77,9 +77,15 @@
       startAgent = true;
       forwardX11 = true;
     };
-    services.pipewire.enable = true;
+    services.pipewire = {
+      enable = true;
+      extraConfig.pipewire = {
+        "context.properties"."module.x11.bell" = false;
+      };
+    };
     services.openssh.enable = true;
-
+    # services.xserver.xkb.layout
+    # services.xserver.xkb.variant
     users.users.leonardo = {
       isNormalUser = true;
       description = "leonardo";
