@@ -9,5 +9,6 @@ in
   "personal-mail.age".publicKeys = keys;
   "work-mail.age".publicKeys = keys;
   "university-mail.age".publicKeys = keys;
+  "spotify.age".publicKeys = keys;
   "authinfo.age".publicKeys = keys;
 }

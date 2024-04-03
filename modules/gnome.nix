@@ -19,14 +19,13 @@
     ];
     environment.systemPackages = with pkgs; [
       gnome.gnome-tweaks
-      pkgs.orchis-theme
-      pkgs.papirus-icon-theme
+      tela-icon-theme
     ] ++ (with gnomeExtensions; [
       appindicator
       vitals
       user-themes
       blur-my-shell
-      x11-gestures
+      graphite-gtk-theme
     ]);
 
     environment.gnome.excludePackages = (with pkgs; [
