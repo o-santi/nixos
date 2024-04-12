@@ -28,8 +28,8 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 ** Theme and font
 #+begin_src emacs-lisp :tangle yes
 (use-package modus-themes)
-; (use-package kanagawa-theme)
-(load-theme 'tsdh-light t)
+;; (use-package kanagawa-theme)
+(load-theme 'wombat t)
 
 (set-face-attribute 'default nil
   :family "Iosevka Nerd Font"
@@ -258,7 +258,7 @@ Try to use the package.
 ** Coq
 #+begin_src emacs-lisp :tangle yes
 (use-package proof-general
-  :mode "\\.md\\'")
+  :mode "\\.v\\'")
 (use-package company-coq
   :hook (coq-mode . company-coq-mode))
 #+end_src

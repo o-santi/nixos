@@ -26,6 +26,7 @@
       user-themes
       blur-my-shell
       graphite-gtk-theme
+      x11-gestures
     ]);
 
     environment.gnome.excludePackages = (with pkgs; [
