@@ -257,8 +257,8 @@ Try to use the package.
 #+end_src
 ** Coq
 #+begin_src emacs-lisp :tangle yes
-(use-package proof-general
-  :mode "\\.v\\'")
+(use-package proof-general)
+
 (use-package company-coq
   :hook (coq-mode . company-coq-mode))
 #+end_src
