@@ -352,7 +352,13 @@ Try to use the package.
   (org-alert-notify-cutoff 30)
   (org-alert-notification-title "Emacs Agenda")
   (alert-default-style 'notifications))
-#+end_src 
+#+end_src
+*** Ox-hugo
+In order to publish files to hugo from org.
+#+begin_src emacs-lisp :tangle yes
+(use-package ox-hugo
+  :after ox)
+#+end_src
 ** Calendar
 try out emacs calfw
 #+begin_src emacs-lisp :tangle yes

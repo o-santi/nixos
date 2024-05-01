@@ -35,9 +35,10 @@
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
     };
+    mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, ... } @ inputs :
+  outputs = { self, nixpkgs, home-manager, agenix, mixrank, ... } @ inputs :
     let
       system = "x86_64-linux";
       hosts = [
@@ -52,6 +53,7 @@
           ./users/leonardo.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.default
+          mixrank.nixosModules.${system}.dev-machine
         ];
       };
     in {

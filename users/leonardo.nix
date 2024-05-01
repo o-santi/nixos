@@ -3,11 +3,9 @@
   imports = [
     ../modules/gnome.nix
     ../modules/emacs/emacs.nix
-    ../modules/s3nixcache-mixrank.nix
   ];
   config = {
     nix = {
-      package = pkgs.nixVersions.nix_2_20;
       settings = {
         trusted-users = [ "root" "leonardo" ];
         experimental-features = "nix-command flakes";
