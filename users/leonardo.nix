@@ -32,7 +32,6 @@
       enableCompletion = true;
       promptInit =
         ''
-        PS1="\e[0;95m\[[\h]\]\e[0m \e[0;32m\[\w\]\e[0m :: "
         vterm_printf() {
             if [ -n "$TMUX" ] && ([ "''${TERM%%-*}" = "tmux" ] || [ "''${TERM%%-*}" = "screen" ]); then
                 # Tell tmux to pass the escape sequences through
@@ -47,7 +46,17 @@
         vterm_prompt_end(){
             vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
         }
-        PS1=$PS1'\[$(vterm_prompt_end)\]'
+        case "$TERM" in
+        "dumb")
+            PS1="> "
+            ;;
+        xterm*|rxvt*|eterm*|screen*)
+            PS1="\e[0;95m\[[\h]\]\e[0m \e[0;32m\[\w\]\e[0m :: '\[$(vterm_prompt_end)\]'"
+            ;;
+        *)
+            PS1="> "
+            ;;
+        esac
         '';
     };
     fonts = {
