@@ -48,6 +48,7 @@
     "org/gnome/shell/extensions/blur-my-shell/applications" = {
       blur=true;
       blur-on-overview=false;
+      dynamic-opacity=false;
       brightness=0.65;
       enable-all=false;
       opacity=255;
