@@ -44,7 +44,7 @@
         "apps-menu@gnome-shell-extensions.gcampax.github.com"
       ];
     };
-    "org/gnome/shell/extensions/user-theme".name = "Orchis-Purple-Dark";
+    "org/gnome/shell/extensions/user-theme".name = "Graphite-Dark";
     "org/gnome/shell/extensions/blur-my-shell/applications" = {
       blur=true;
       blur-on-overview=false;
