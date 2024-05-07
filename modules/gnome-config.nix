@@ -6,12 +6,12 @@
       picture-options = "zoom";
     };
     "org/gnome/desktop/interface" = {
-      color-scheme="default";
+      color-scheme="prefer-dark";
       enable-hot-corners=false;
       font-antialiasing="grayscale";
       font-hinting="slight";
-      gtk-theme="Orchis-Purple-Dark";
-      icon-theme="Papirus-Dark";
+      gtk-theme="Graphite-Dark";
+      icon-theme="Tela-brown-light";
       show-battery-percentage=true;
     };
     "org/gnome/desktop/peripherals/touchpad" = {
@@ -45,19 +45,10 @@
       ];
     };
     "org/gnome/shell/extensions/user-theme".name = "Orchis-Purple-Dark";
-    "org/gnome/shell/extensions/blur-my-shell" = {
-      brightness=0.64000000000000001;
-      color-and-noise=false;
-      hacks-level=3;
-      noise-amount=0.0;
-      noise-lightness=0.0;
-      sigma=43;
-    };
     "org/gnome/shell/extensions/blur-my-shell/applications" = {
       blur=true;
       blur-on-overview=false;
-      brightness=0.80000000000000004;
-      customize=false;
+      brightness=0.65;
       enable-all=false;
       opacity=255;
       sigma=10;
