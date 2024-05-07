@@ -3,6 +3,7 @@
   dconf.settings = {
     "org/gnome/desktop/background" = {
       picture-uri = "${../wallpaper.png}";
+      picture-uri-dark = "${../wallpaper.png}";
       picture-options = "zoom";
     };
     "org/gnome/desktop/interface" = {
