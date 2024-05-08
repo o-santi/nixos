@@ -13,7 +13,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/58a1abdbae3217ca6b702f03d3b35125d88a2994";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,7 +35,7 @@
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
     };
-    mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank";
+    mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank?ref=2024-05-06-hosts-in-nix";
   };
 
   outputs = { self, nixpkgs, home-manager, agenix, mixrank, ... } @ inputs :
