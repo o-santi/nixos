@@ -13,7 +13,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/58a1abdbae3217ca6b702f03d3b35125d88a2994";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,7 +58,6 @@
       };
     in {
       nixosConfigurations = builtins.listToAttrs 
-        (map (host: {name = host; value = defaultNixosSystem host; }) hosts)
-      ;
+        (map (host: {name = host; value = defaultNixosSystem host; }) hosts);
     };
 }
