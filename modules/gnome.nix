@@ -24,7 +24,6 @@
       appindicator
       vitals
       user-themes
-      blur-my-shell
       graphite-gtk-theme
       x11-gestures
     ]);

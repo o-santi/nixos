@@ -35,16 +35,14 @@
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
     };
-    mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank?ref=2024-05-06-hosts-in-nix";
+    #mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank?ref=2024-05-06-hosts-in-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, mixrank, ... } @ inputs :
+  outputs = { self, nixpkgs, home-manager, agenix, ... } @ inputs :
     let
+      inherit (builtins) listToAttrs readDir attrNames;
       system = "x86_64-linux";
-      hosts = [
-        "hanekawa" # notebook
-        "kunagisa" # workstation
-      ];
+      hosts = attrNames (readDir ./hosts);
       defaultNixosSystem = host: nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
@@ -53,11 +51,11 @@
           ./users/leonardo.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.default
-          mixrank.nixosModules.${system}.dev-machine
+          # mixrank.nixosModules.${system}.dev-machine
         ];
       };
     in {
-      nixosConfigurations = builtins.listToAttrs 
+      nixosConfigurations = listToAttrs 
         (map (host: {name = host; value = defaultNixosSystem host; }) hosts);
     };
 }

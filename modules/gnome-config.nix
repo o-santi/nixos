@@ -34,7 +34,6 @@
     "org/gnome/shell" = {
       enabled-extensions = [
         "appindicatorsupport@rgcjonas.gmail.com"
-        "blur-my-shell@aunetx"
         "light-style@gnome-shell-extensions.gcampax.github.com"
         "Vitals@CoreCoding.com"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
@@ -46,16 +45,6 @@
       ];
     };
     "org/gnome/shell/extensions/user-theme".name = "Graphite-Dark";
-    "org/gnome/shell/extensions/blur-my-shell/applications" = {
-      blur=true;
-      blur-on-overview=false;
-      dynamic-opacity=false;
-      brightness=0.65;
-      enable-all=false;
-      opacity=255;
-      sigma=10;
-      whitelist = ["Emacs"];
-    };
     "org/honem/shell/extensions/vitals" = {
       hide-zeros = true;
       position-in-panel = "0";

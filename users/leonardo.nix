@@ -89,8 +89,7 @@
       };
     };
     services.openssh.enable = true;
-    # services.xserver.xkb.layout
-    # services.xserver.xkb.variant
+    users.mutableUsers = false;
     users.users.leonardo = {
       isNormalUser = true;
       description = "leonardo";
@@ -123,6 +122,7 @@
     };
     services.gnome.gnome-browser-connector.enable = true;
     home-manager = {
+      backupFileExtension = "backup";
       useGlobalPkgs = true;
       useUserPackages = true;
       users.leonardo = { pkgs, ... } : {
