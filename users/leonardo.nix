@@ -81,6 +81,10 @@
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     };
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     programs.ssh.startAgent = true;
     services.pipewire = {
       enable = true;
@@ -205,11 +209,6 @@
           fzf = {
             enable = true;
             enableBashIntegration = true;
-          };
-          direnv = {
-            enable = true;
-            enableBashIntegration = true;
-            nix-direnv.enable = true;
           };
           git = {
             enable = true;

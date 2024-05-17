@@ -139,9 +139,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1715486357,
@@ -164,11 +162,11 @@
         "nixpkgs_old": "nixpkgs_old"
       },
       "locked": {
-        "lastModified": 1715264320,
-        "narHash": "sha256-1728gtHhlPQqGiyMtBaO7GYRKwg2O1SafDYbXzNRQXQ=",
+        "lastModified": 1715884511,
+        "narHash": "sha256-50vXBrYqJGsSSrTH6jY8vmcZo2ImRJ2vrWG6690fHwc=",
         "ref": "2024-05-06-hosts-in-nix",
-        "rev": "39cec387d9b3e665e384b23b38bb0fe714d5fcdb",
-        "revCount": 62072,
+        "rev": "30a55b196b9b22af7dc72dc7479cbda68513acc9",
+        "revCount": 62180,
         "type": "git",
         "url": "ssh://git@gitlab.com/mixrank/mixrank"
       },
@@ -180,15 +178,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1715447595,
-        "narHash": "sha256-VsVAUQOj/cS1LCOmMjAGeRksXIAdPnFIjCQ0XLkCsT0=",
-        "owner": "nixos",
+        "lastModified": 1715787315,
+        "narHash": "sha256-cYApT0NXJfqBkKcci7D9Kr4CBYZKOQKDYA23q8XNuWg=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "062ca2a9370a27a35c524dc82d540e6e9824b652",
+        "rev": "33d1e753c82ffc557b4a585c77de43d4c922ebb5",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -206,6 +204,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-23.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1715447595,
+        "narHash": "sha256-VsVAUQOj/cS1LCOmMjAGeRksXIAdPnFIjCQ0XLkCsT0=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "062ca2a9370a27a35c524dc82d540e6e9824b652",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -251,7 +265,7 @@
         "from-elisp": "from-elisp",
         "home-manager": "home-manager",
         "mixrank": "mixrank",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "systems": {
