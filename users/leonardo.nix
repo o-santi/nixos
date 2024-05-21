@@ -99,7 +99,7 @@
       description = "leonardo";
       extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.bashInteractive;
-      hashedPassword = "$y$j9T$NT9Ymktl8npD5RomDyBmK0$YfrrP0fcHRPcJZAAO.g8pRsSBoYvIq2aBBxBAHIesU2";
+      hashedPasswordFile = config.age.secrets.user-pass.path;
     };
 
     age.secrets = {
@@ -123,6 +123,11 @@
         owner = "1000";
         group = "100";
       };
+      user-pass = {
+        file = ../secrets/user-pass.age;
+        owner = "1000";
+        group = "100";
+      }
     };
     services.gnome.gnome-browser-connector.enable = true;
     home-manager = {
@@ -215,7 +220,7 @@
             diff-so-fancy.enable = true;
             extraConfig = {
               user.name = "Leonardo Santiago";
-              user.email = "leonardo@mixrank.com";
+              user.email = "leonardo.ribeiro.santiago@gmail.com";
               color.ui = true;
             };
           };

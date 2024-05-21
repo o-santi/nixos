@@ -12,4 +12,5 @@ in
   "work-mail.age".publicKeys = keys;
   "university-mail.age".publicKeys = keys;
   "authinfo.age".publicKeys = keys;
+  "user-pass.age".publicKeys = keys;
 }
