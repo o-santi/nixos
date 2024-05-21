@@ -51,7 +51,7 @@
             PS1="> "
             ;;
         xterm*|rxvt*|eterm*|screen*)
-            PS1="\e[0;95m\[[\h]\]\e[0m \e[0;32m\[\w\]\e[0m :: "
+            PS1="\033[1;95m\[[\h]\]\033[0m \033[0;32m\[\w\]\033[0m :: "
             PS1=$PS1'\[$(vterm_prompt_end)\]'
             ;;
         *)
