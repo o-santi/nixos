@@ -127,7 +127,7 @@
         file = ../secrets/user-pass.age;
         owner = "1000";
         group = "100";
-      }
+      };
     };
     services.gnome.gnome-browser-connector.enable = true;
     home-manager = {
