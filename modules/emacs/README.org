@@ -376,6 +376,8 @@ try out emacs calfw
 *** Mu4e
 **** Setting up mu4e.
 #+begin_src emacs-lisp :tangle yes
+(setq send-mail-function 'sendmail-send-it)
+(setq smtpmail-smtp-server "mail.google.com")
 (setq epg-pinentry-mode 'loopback)
 (setq user-mail-address "leonardo.ribeiro.santiago@gmail.com")
 #+end_src
