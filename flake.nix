@@ -14,6 +14,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager.url = "github:nix-community/home-manager";
     agenix = {
       url = "github:ryantm/agenix";
@@ -42,7 +43,7 @@
       hosts = attrNames (readDir ./hosts);
       defaultNixosSystem = host: nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs hosts; };
         modules = [
           ./hosts/${host}/configuration.nix
           ./users/leonardo.nix

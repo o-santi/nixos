@@ -38,6 +38,7 @@
         "Vitals@CoreCoding.com"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
         "x11gestures@joseexposito.github.io"
+        "gsconnect@andyholmes.github.io"
       ];
       disabled-extensions= [
         "windowsNavigator@gnome-shell-extensions.gcampax.github.com"

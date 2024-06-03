@@ -18,8 +18,9 @@
       };
     };
 
-    environment.systemPackages = [
-      pkgs.prismlauncher
+    environment.systemPackages = with pkgs;[
+      prismlauncher
+      rage
     ];
     
     nixpkgs = {
@@ -92,7 +93,13 @@
         "context.properties"."module.x11.bell" = false;
       };
     };
-    services.openssh.enable = true;
+    services.openssh = {
+      enable = true;
+      settings = {
+        KbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+      };
+    };
     users.mutableUsers = false;
     users.users.leonardo = {
       isNormalUser = true;
@@ -100,6 +107,7 @@
       extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.bashInteractive;
       hashedPasswordFile = config.age.secrets.user-pass.path;
+      openssh.authorizedKeys.keys = builtins.attrValues (import ../secrets/hosts-pub-keys.nix);
     };
 
     age.secrets = {

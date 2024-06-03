@@ -26,7 +26,20 @@
       user-themes
       graphite-gtk-theme
       x11-gestures
+      gsconnect
     ]);
+
+    
+    # gsconnect specific
+    programs.firefox.nativeMessagingHosts.gsconnect.enable = true;
+    networking.firewall.allowedTCPPortRanges = [
+      # KDE Connect
+      { from = 1714; to = 1764; }
+    ];
+    networking.firewall.allowedUDPPortRanges = [
+      # KDE Connect
+      { from = 1714; to = 1764; }
+    ];
 
     environment.gnome.excludePackages = (with pkgs; [
       gnome-photos

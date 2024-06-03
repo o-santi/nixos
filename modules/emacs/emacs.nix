@@ -44,6 +44,7 @@ in
     nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
     environment.systemPackages = [
       emacs
+      (pkgs.aspellWithDicts (dicts: with dicts; [ pt_BR en en-computers ]))
     ] ++ outside-emacs;
     fonts.packages = with pkgs; [
       emacs-all-the-icons-fonts

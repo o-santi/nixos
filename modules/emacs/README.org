@@ -49,6 +49,30 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 #+end_src
 
 * Utility
+** Age encryption
+Configuration to automagically open age files, and to encrypt them correctly to all my machines.
+#+begin_src emacs-lisp :tangle yes
+(use-package age
+  :ensure t
+  :demand t
+  :custom
+  (age-program "rage")
+  (age-default-identity "~/.ssh/leonardo")
+  (age-default-recipient
+   '("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWxS8tdN3j7Vm337RmJTzYTMbkAZN5g610ZesH4vhd8"
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrMCLu3VvQVmd2cqreAJsVKkrtKXqgzO8i8NDm06ysm"
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFQN59YDFwwQt/1rb1dHZnxsNV2geWUvHyTKqjdSA52"
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKjyS7vbCxr7oDqBpnhHQQzolAW6Fqt1FTOo+hT+lSC"))
+  :config
+  (age-file-enable))
+#+end_src
+** Flyspell
+#+begin_src emacs-lisp :tangle yes
+(use-package flyspell
+  :hook (org-mode . flyspell-mode)
+  :custom
+  (ispell-program-name "aspell"))
+#+end_src
 ** All the Icons
 Works through nixosModules.
 #+begin_src emacs-lisp :tangle yes
@@ -257,6 +281,8 @@ Try to use the package.
   :hook (org-mode . org-indent-mode)
   :bind ("C-c a" . org-agenda)
   :config
+  (add-to-list 'org-src-lang-modes '("rust" . rust-ts))
+  (add-to-list 'org-src-lang-modes '("python" . python-ts))
   (custom-set-faces
    '(org-headline-done
      ((((class color) (min-colors 16) (background dark)) 
@@ -274,35 +300,8 @@ Try to use the package.
   (org-indirect-buffer-display 'other-window)
   (org-confirm-babel-evaluate nil)
   (org-edit-src-content-indentation 0)
-  (org-auto-align-tags nil)
+  (org-auto-align-tags t)
   (org-fontify-done-headline t))
-#+end_src
-*** Org Modern
-#+begin_src emacs-lisp :tangle yes
-(defun bg (color)
-  `(:background ,color :inherit (org-todo org-modern-label) :foreground "gray25"))
-
-(use-package org-modern
-  :after org
-  :hook (org-mode . org-modern-mode)
-  :hook (org-agenda-finalize . org-modern-agenda)
-  :custom
-  (org-modern-todo-faces
-   `(("IDEA"  . ,(bg "yellow"))
-     ("TODO"  . org-modern-todo)
-     ("STUCK" . ,(bg "brown"))
-     ("DOING" . ,(bg "green"))
-     ("DONE"  . org-modern-done)
-     ; work tasks
-     ("ASSIGNED" . org-modern-todo)
-     ("WORKING" . ,(bg "green yellow"))
-     ("ON REVIEW" . ,(bg "sandy brown"))
-     ("MERGED" . org-modern-done)
-     ("CANCELLED" . ,(bg "OrangeRed1"))
-     ; one time tasks
-     ("EVENT" . ,(bg "deep sky blue"))
-     ("DONE" . org-modern-done)))
-  (org-modern-priority t))
 #+end_src
 *** Org Agenda
 #+begin_src emacs-lisp :tangle yes
