@@ -114,20 +114,22 @@ in
       openssh.authorizedKeys.keys = builtins.attrValues (hosts-pub-keys);
     };
 
-    age.secrets = {
-      user-ssh-key = {
-        file = ../secrets/user-ssh-key.age;
-        path = "/home/leonardo/.ssh/user-ssh-key";
-        owner = "leonardo";
-        group = "users";
-      };
-    } // (builtins.foldl' (acc: filename: acc // {
-      ${filename} = {
-        file = ../secrets/${filename}.age;
-        owner = "leonardo";
-        group = "users";
-      };
-    }) {} [ "personal-mail" "work-mail" "university-mail" "authinfo" "user-pass" ]);
+    age = {
+      secrets = {
+        user-ssh-key = {
+          file = ../secrets/user-ssh-key.age;
+          path = "/home/leonardo/.ssh/id_ed25519";
+          owner = "leonardo";
+          group = "users";
+        };
+      } // (builtins.foldl' (acc: filename: acc // {
+        ${filename} = {
+          file = ../secrets/${filename}.age;
+          owner = "leonardo";
+          group = "users";
+        };
+      }) {} [ "personal-mail" "work-mail" "university-mail" "authinfo" "user-pass" ]);
+    };
     services.gnome.gnome-browser-connector.enable = true;
     home-manager = {
       backupFileExtension = "backup";
@@ -136,7 +138,7 @@ in
       users.leonardo = { pkgs, ... } : {
         imports = [ ./../modules/gnome-config.nix ];
         home = {
-          file.".ssh/user-ssh-key.pub".source = ../secrets/user-ssh-key.pub;
+          file.".ssh/id_ed25519.pub".source = ../secrets/user-ssh-key.pub;
           file.".mozilla/firefox/leonardo/chrome/firefox-gnome-theme".source = inputs.firefox-gnome-theme;
           username = "leonardo";
           homeDirectory = "/home/leonardo";
@@ -222,7 +224,7 @@ in
               user = {
                 name = "Leonardo Santiago";
                 email = "leonardo.ribeiro.santiago@gmail.com";
-                signingkey = "~/.ssh/user-ssh-key";
+                signingkey = "~/.ssh/id_ed25519";
               };
               color.ui = true;
               gpg.format = "ssh";

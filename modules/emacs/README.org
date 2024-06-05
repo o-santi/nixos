@@ -57,7 +57,6 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   :demand t
   :custom
   (age-program "rage")
-  (age-default-identity "~/.ssh/leonardo")
   (age-default-recipient
    '("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWxS8tdN3j7Vm337RmJTzYTMbkAZN5g610ZesH4vhd8"
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrMCLu3VvQVmd2cqreAJsVKkrtKXqgzO8i8NDm06ysm"
