@@ -1,6 +1,7 @@
 let
-  inherit (builtins) attrValues concatLists;
-  keys = concatLists (map attrValues (attrValues (import ./pub-ssh-keys.nix)));
+  inherit (builtins) attrValues readFile;
+  user-key = readFile ./user-ssh-key.pub;
+  keys = [ user-key ] ++ (attrValues (import ./pub-ssh-keys.nix));
 in
 {
   "personal-mail.age".publicKeys = keys;

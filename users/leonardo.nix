@@ -1,8 +1,7 @@
 { pkgs, config, inputs, ... }:
 let
-  all-keys = import ../secrets/pub-ssh-keys.nix;
-  sshkeys = all-keys.${config.networking.hostName};
-  user-key = sshkeys.user;
+  hosts-pub-keys = import ../secrets/host-pub-keys.nix;
+  host-key = hosts-pub-keys.${config.networking.hostName};
 in
 {
   imports = [
@@ -112,36 +111,23 @@ in
       extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.bashInteractive;
       hashedPasswordFile = config.age.secrets.user-pass.path;
-      openssh.authorizedKeys.keys = builtins.concatLists (map builtins.attrValues (builtins.attrValues all-keys));
+      openssh.authorizedKeys.keys = builtins.attrValues (hosts-pub-keys);
     };
 
     age.secrets = {
-      personal-mail = {
-        file = ../secrets/personal-mail.age;
-        owner = "1000";
-        group = "100";
+      user-ssh-key = {
+        file = ../secrets/user-ssh-key.age;
+        path = "/home/leonardo/.ssh/user-ssh-key";
+        owner = "leonardo";
+        group = "users";
       };
-      work-mail = {
-        file = ../secrets/work-mail.age;
-        owner = "1000";
-        group = "100";
+    } // (builtins.foldl' (acc: filename: acc // {
+      ${filename} = {
+        file = ../secrets/${filename}.age;
+        owner = "leonardo";
+        group = "users";
       };
-      university-mail = {
-        file = ../secrets/university-mail.age;
-        owner = "1000";
-        group = "100";
-      };
-      authinfo = {
-        file = ../secrets/authinfo.age;
-        owner = "1000";
-        group = "100";
-      };
-      user-pass = {
-        file = ../secrets/user-pass.age;
-        owner = "1000";
-        group = "100";
-      };
-    };
+    }) {} [ "personal-mail" "work-mail" "university-mail" "authinfo" "user-pass" ]);
     services.gnome.gnome-browser-connector.enable = true;
     home-manager = {
       backupFileExtension = "backup";
@@ -150,6 +136,7 @@ in
       users.leonardo = { pkgs, ... } : {
         imports = [ ./../modules/gnome-config.nix ];
         home = {
+          file.".ssh/user-ssh-key.pub".source = ../secrets/user-ssh-key.pub;
           file.".mozilla/firefox/leonardo/chrome/firefox-gnome-theme".source = inputs.firefox-gnome-theme;
           username = "leonardo";
           homeDirectory = "/home/leonardo";
@@ -235,7 +222,7 @@ in
               user = {
                 name = "Leonardo Santiago";
                 email = "leonardo.ribeiro.santiago@gmail.com";
-                signingkey = user-key;
+                signingkey = "~/.ssh/user-ssh-key";
               };
               color.ui = true;
               gpg.format = "ssh";
