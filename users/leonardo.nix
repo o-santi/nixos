@@ -111,7 +111,7 @@ in
       extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.bashInteractive;
       hashedPasswordFile = config.age.secrets.user-pass.path;
-      openssh.authorizedKeys.keys = builtins.attrValues (hosts-pub-keys);
+      openssh.authorizedKeys.keys = [ (builtins.readFile ../secrets/user-ssh-key.pub)] ++  builtins.attrValues (hosts-pub-keys);
     };
 
     age = {
