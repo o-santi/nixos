@@ -1,4 +1,9 @@
 { pkgs, config, inputs, ... }:
+let
+  all-keys = import ../secrets/pub-ssh-keys.nix;
+  sshkeys = all-keys.${config.networking.hostName};
+  user-key = sshkeys.user;
+in
 {
   imports = [
     ../modules/gnome.nix
@@ -107,7 +112,7 @@
       extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.bashInteractive;
       hashedPasswordFile = config.age.secrets.user-pass.path;
-      openssh.authorizedKeys.keys = builtins.attrValues (import ../secrets/hosts-pub-keys.nix);
+      openssh.authorizedKeys.keys = builtins.concatLists (map builtins.attrValues (builtins.attrValues all-keys));
     };
 
     age.secrets = {
@@ -227,9 +232,14 @@
             enable = true;
             diff-so-fancy.enable = true;
             extraConfig = {
-              user.name = "Leonardo Santiago";
-              user.email = "leonardo.ribeiro.santiago@gmail.com";
+              user = {
+                name = "Leonardo Santiago";
+                email = "leonardo.ribeiro.santiago@gmail.com";
+                signingkey = user-key;
+              };
               color.ui = true;
+              gpg.format = "ssh";
+              commit.gpgsign = true;
             };
           };
           mu.enable = true;

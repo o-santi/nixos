@@ -1,9 +1,6 @@
 let
-  kunagisa-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWxS8tdN3j7Vm337RmJTzYTMbkAZN5g610ZesH4vhd8";
-  hanekawa-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOafACtb4IgSczDrollTm/t/xIYcVdLlUxDz72TxsZJZ";
-  larissa-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFQN59YDFwwQt/1rb1dHZnxsNV2geWUvHyTKqjdSA52";
-  hosts-keys = builtins.attrValues (import ./hosts-pub-keys.nix);
-  keys = [ kunagisa-user hanekawa-user larissa-user] ++ hosts-keys;
+  inherit (builtins) attrValues concatLists;
+  keys = concatLists (map attrValues (attrValues (import ./pub-ssh-keys.nix)));
 in
 {
   "personal-mail.age".publicKeys = keys;
