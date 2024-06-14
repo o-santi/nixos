@@ -23,6 +23,8 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 
 (setq ring-bell-function 'ignore)
 (setq-default indent-tabs-mode nil)
+
+(setq window-combination-resize t)
 #+end_src
 
 ** Theme and font
@@ -49,6 +51,13 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 #+end_src
 
 * Utility
+** Searching
+#+begin_src emacs-lisp :tangle yes
+(use-package rg)
+
+(setq isearch-lazy-count t)
+(setq isearch-lazy-highlight t)
+#+end_src
 ** Age encryption
 Configuration to automagically open age files, and to encrypt them correctly to all my machines.
 #+begin_src emacs-lisp :tangle yes
@@ -75,11 +84,9 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 ** All the Icons
 Works through nixosModules.
 #+begin_src emacs-lisp :tangle yes
-(use-package all-the-icons
-  :if (display-graphic-p))
+(use-package all-the-icons)
 
 (use-package all-the-icons-completion
-  :if (display-graphic-p)
   :after all-the-icons
   :hook (marginalia-mode . all-the-icons-completion-mode))
 #+end_src
@@ -110,20 +117,17 @@ To interact with gitlab and github.
 ** Vertico, Orderless, Marginalia
 Pretty minibuffer support
 #+begin_src emacs-lisp :tangle yes
-  (use-package vertico
-    :config (vertico-mode))
+(use-package vertico
+  :config (vertico-mode))
 
-  (use-package orderless
-    :custom
-    (completion-styles '(orderless basic))
-    (completion-category-defaults nil)
-    (completion-category-overrides '((file (styles basic partial-completion)))))
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 
-  (use-package marginalia
-    :config (marginalia-mode))
-
-  (use-package ctrlf
-    :config (ctrlf-mode +1))
+(use-package marginalia
+  :config (marginalia-mode))
 #+end_src
 ** Projects
 #+begin_src emacs-lisp :tangle yes
@@ -217,7 +221,7 @@ Add support for ansi escape codes in compilation
   :custom (compilation-environment '("TERM=xterm-256color")))
 (defun my/advice-compilation-filter (f proc string)
   (funcall f proc (xterm-color-filter string)))
-(advice-add 'compilation-filter :around #'my/advice-compilation-filter)
+(add-hook 'compilation-filter-hook #'my/advice-compilation-filter)
 #+end_src
 
 ** Pdf reader

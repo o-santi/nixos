@@ -7,8 +7,8 @@ let
       pylsp-mypy
     ])))
     nil
-    rust-analyzer
     parallel
+    ripgrep
   ];
   org-tangle-elisp-blocks = (pkgs.callPackage ./org.nix {inherit pkgs; from-elisp = inputs.from-elisp;}).org-tangle ({ language, flags } :
     let is-elisp = (language == "emacs-lisp") || (language == "elisp");
