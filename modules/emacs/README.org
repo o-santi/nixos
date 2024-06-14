@@ -66,11 +66,12 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   :demand t
   :custom
   (age-program "rage")
+  (age-default-identity "~/.ssh/id_ed25519")
   (age-default-recipient
-   '("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWxS8tdN3j7Vm337RmJTzYTMbkAZN5g610ZesH4vhd8"
+   '("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJp9EEbJgk/oI84419RmpoDeiACDywNfG4akgdpDBL5W"
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKjyS7vbCxr7oDqBpnhHQQzolAW6Fqt1FTOo+hT+lSC"
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrMCLu3VvQVmd2cqreAJsVKkrtKXqgzO8i8NDm06ysm"
-     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFQN59YDFwwQt/1rb1dHZnxsNV2geWUvHyTKqjdSA52"
-     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKjyS7vbCxr7oDqBpnhHQQzolAW6Fqt1FTOo+hT+lSC"))
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuIjOE3xi/frXJHXQuIBntuXP8XyboCWRx48o3sYeub"))
   :config
   (age-file-enable))
 #+end_src
@@ -272,7 +273,9 @@ Try to use the package.
 #+end_src
 ** Coq
 #+begin_src emacs-lisp :tangle yes
-(use-package proof-general)
+(use-package proof-general
+  :custom
+  (proof-splash-enable nil))
 
 (use-package company-coq
   :hook (coq-mode . company-coq-mode))
