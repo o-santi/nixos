@@ -34,7 +34,7 @@ in
     programs.bash = {
       vteIntegration = true;
       enableLsColors = true;
-      enableCompletion = true;
+      completion.enable = true;
       promptInit =
         ''
         vterm_printf() {

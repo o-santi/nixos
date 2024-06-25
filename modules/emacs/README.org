@@ -33,10 +33,10 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 ;; (use-package kanagawa-theme)
 (load-theme 'modus-operandi-tinted t)
 
-(set-face-attribute 'default nil
-  :family "Iosevka Nerd Font"
-  :width 'normal
-  :weight 'normal)
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (select-frame frame)
+            (set-frame-font "Iosevka Nerd Font 12" nil t)))
 #+end_src
 
 ** Backups
@@ -54,9 +54,8 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 ** Searching
 #+begin_src emacs-lisp :tangle yes
 (use-package rg)
-
-(setq isearch-lazy-count t)
-(setq isearch-lazy-highlight t)
+(use-package ctrlf
+  :config (ctrlf-mode +1))
 #+end_src
 ** Age encryption
 Configuration to automagically open age files, and to encrypt them correctly to all my machines.
