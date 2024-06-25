@@ -53,7 +53,15 @@
         ];
       };
     in {
-      nixosConfigurations = listToAttrs 
-        (map (host: {name = host; value = defaultNixosSystem host; }) hosts);
+      nixosConfigurations =
+        (listToAttrs (map (host: {name = host; value = defaultNixosSystem host; }) hosts))
+         // { iori = nixpkgs.lib.nixosSystem {
+                system = "aarch64-linux";
+                specialArgs = { inherit inputs; };
+                modules = [
+                  ./hosts/iori/configuration.nix
+                ];
+              };
+            };
     };
 }
