@@ -212,7 +212,7 @@ Completion popup system
 #+end_src
 ** Vterm
 #+begin_src emacs-lisp :tangle yes
-(use-package vterm)
+(use-package eat)
 #+end_src
 ** Compilation
 Add support for ansi escape codes in compilation
