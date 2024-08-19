@@ -9,21 +9,28 @@ let
     nil
     parallel
     ripgrep
+    emacs-lsp-booster
   ];
-  org-tangle-elisp-blocks = (pkgs.callPackage ./org.nix {inherit pkgs; from-elisp = inputs.from-elisp;}).org-tangle ({ language, flags } :
+  org-tangle-elisp-blocks = (pkgs.callPackage ./org.nix {inherit pkgs; inherit (inputs) from-elisp;}).org-tangle ({ language, flags } :
     let is-elisp = (language == "emacs-lisp") || (language == "elisp");
         is-tangle = if flags ? ":tangle" then
           flags.":tangle" == "yes" || flags.":tangle" == "y" else false;
     in is-elisp && is-tangle
   );
   config-el = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./README.org));
-  emacs = (pkgs.emacsWithPackagesFromUsePackage {
+  emacs = pkgs.emacsWithPackagesFromUsePackage {
     package = pkgs.emacs.override {
       withGTK3 = true;
       withNativeCompilation = true;
       withAlsaLib = true;
       withSystemd = true;
       withToolkitScrollBars = true;
+    };
+    override = epkgs: epkgs // {
+      eglot-booster = pkgs.callPackage ./eglot-booster.nix {
+        inherit (pkgs) fetchFromGitHub;
+        inherit (epkgs) trivialBuild;
+      };
     };
     config = config-el; 
     alwaysEnsure = true;
@@ -34,10 +41,7 @@ let
         tree-sitter-python
       ]))
     ] ++ outside-emacs;
-    override = final: prev: {
-      final.buildInputs = prev.buildInputs or [] ++ outside-emacs;
-    };
-  });
+  };
 in
 {
   config = {

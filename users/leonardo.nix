@@ -1,7 +1,6 @@
 { pkgs, config, inputs, ... }:
 let
   hosts-pub-keys = import ../secrets/host-pub-keys.nix;
-  host-key = hosts-pub-keys.${config.networking.hostName};
 in
 {
   imports = [
@@ -10,9 +9,9 @@ in
   ];
   config = {
     nix = {
+      package = pkgs.lib.mkForce pkgs.nixVersions.nix_2_23;
       settings = {
         trusted-users = [ "root" "leonardo" ];
-        experimental-features = "nix-command flakes";
         auto-optimise-store = true;
       };
       gc = {
@@ -26,7 +25,8 @@ in
       prismlauncher
       rage
     ];
-    
+
+  
     nixpkgs = {
       config.allowUnfree = true;
       config.allowUnfreePredicate = _: true;

@@ -9,8 +9,13 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelParams = [
+  #   "video=HDMI-1:1920x1080@60"
+  #   "video=DP-2:2560x1080@75"
+  # ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =

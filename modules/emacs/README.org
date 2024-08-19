@@ -31,7 +31,7 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 #+begin_src emacs-lisp :tangle yes
 (use-package modus-themes)
 ;; (use-package kanagawa-theme)
-(load-theme 'modus-operandi-tinted t)
+(load-theme 'tango t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
@@ -74,20 +74,13 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   :config
   (age-file-enable))
 #+end_src
-** Flyspell
-#+begin_src emacs-lisp :tangle yes
-(use-package flyspell
-  :hook (org-mode . flyspell-mode)
-  :custom
-  (ispell-program-name "aspell"))
-#+end_src
 ** All the Icons
-Works through nixosModules.
 #+begin_src emacs-lisp :tangle yes
 (use-package all-the-icons)
 
 (use-package all-the-icons-completion
   :after all-the-icons
+  :after marginalia
   :hook (marginalia-mode . all-the-icons-completion-mode))
 #+end_src
 ** Direnv
@@ -168,19 +161,10 @@ Better help defaults
 (use-package which-key
   :config (which-key-mode))
 #+end_src
-** Dired
+** Dirvish
 I wanna try some QoL addons for dired.
 #+begin_src emacs-lisp :tangle yes
-(use-package dired
-  :hook (dired-mode . dired-hide-details-mode))
-(use-package dired-subtree
-  :after dired
-  :config
-  (add-hook 'dired-mode-hook
-            (lambda () (local-set-key (kbd "<tab>") #'dired-subtree-toggle))))
-
-(use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode))
+(use-package dirvish)
 #+end_src
 ** Windows
 I wanna test out =winner-mode=
@@ -196,7 +180,12 @@ I wanna test out =winner-mode=
 Language server support. Already comes installed but used to configure additional language servers.
 #+begin_src emacs-lisp :tangle yes
 (use-package eglot
+  :ensure nil
   :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
+
+(use-package eglot-booster
+  :after eglot
+  :config (eglot-booster-mode))
 #+end_src
 
 ** Corfu

@@ -49,7 +49,7 @@
           ./users/leonardo.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.default
-          mixrank.nixosModules.${system}.dev-machine
+          mixrank.nixosModules.dev-machine
         ];
       };
     in {
