@@ -74,14 +74,18 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   :config
   (age-file-enable))
 #+end_src
-** All the Icons
+** Nerd icons
 #+begin_src emacs-lisp :tangle yes
-(use-package all-the-icons)
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "Iosevka Nerd Font"))
 
-(use-package all-the-icons-completion
-  :after all-the-icons
+(use-package nerd-icons-completion
+  :after nerd-icons
   :after marginalia
-  :hook (marginalia-mode . all-the-icons-completion-mode))
+  :hook (marginalia-mode . nerd-icons-completion-marginal)
+  :config
+  (nerd-icons-completion-mode))
 #+end_src
 ** Direnv
 To integrate with nix shells.

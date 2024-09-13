@@ -143,8 +143,8 @@
         "nixpkgs_old": "nixpkgs_old"
       },
       "locked": {
-        "lastModified": 1725915493,
-        "narHash": "sha256-uT7vO4LyEn2D0PCkQARkJd1T/tR+EfYnFusGK2UxrL4=",
+        "lastModified": 1726261422,
+        "narHash": "sha256-6HfQRP2enWknskI102YNEgMBeBdGDs16cPs7Gf52+7k=",
         "path": "/home/leonardo/mx/mixrank",
         "type": "path"
       },

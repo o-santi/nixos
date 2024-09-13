@@ -35,8 +35,11 @@ in {
       };
     in {
       user-pass = with-perms "user-pass";
-      user-ssh-key = (with-perms "user-ssh-key") // {
+      user-ssh-key = {
+        file = ../secrets/user-ssh-key.age;
         path = "/home/leonardo/.ssh/id_ed25519";
+        owner = "leonardo";
+        group = "users";
       };
     } // (optionalAttrs cfg.mu.enable (let
       mails = ["work-mail" "personal-mail" "university-mail"];
@@ -62,8 +65,10 @@ in {
         imports = [ (import ./gnome/gnome-config.nix config.santi-modules) ];
         home = {
           stateVersion = "23.05";
+          homeDirectory = "/home/leonardo";
           file.".ssh/id_ed25519.pub".source = ../secrets/user-ssh-key.pub;
           file.".mozilla/firefox/leonardo/chrome/firefox-gnome-theme" =  mkIf cfg.firefox.enable { source = inputs.firefox-gnome-theme; };
+          
           packages = lib.optionals cfg.desktop-environment.enable (with pkgs; [
             discord
             slack
