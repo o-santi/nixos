@@ -1,13 +1,11 @@
-{ pkgs, inputs, ...}:
+{ pkgs, inputs, lib, config,  ...}:
 let
   outside-emacs = with pkgs; [
     (python3.withPackages (p: (with p; [
       python-lsp-server
       python-lsp-ruff
-      pylsp-mypy
     ])))
     nil
-    parallel
     ripgrep
     emacs-lsp-booster
   ];
@@ -42,9 +40,9 @@ let
       ]))
     ] ++ outside-emacs;
   };
-in
-{
-  config = {
+in with lib; {
+  options.santi-modules.emacs.enable = mkEnableOption "Enable emacs configuration";
+  config = mkIf config.santi-modules.emacs.enable {
     nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
     environment.systemPackages = [
       emacs

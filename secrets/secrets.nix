@@ -10,4 +10,5 @@ in
   "university-mail.age".publicKeys = keys;
   "authinfo.age".publicKeys = keys;
   "user-pass.age".publicKeys = keys;
+  "cloudflare.age".publicKeys = keys;
 }

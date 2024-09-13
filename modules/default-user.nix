@@ -1,85 +1,23 @@
-{ pkgs, config, inputs, ... }:
-let
-  hosts-pub-keys = import ../secrets/host-pub-keys.nix;
-in
-{
+{ config, lib, inputs, pkgs, ...}: with lib; let
+  cfg = config.santi-modules;
+in {
   imports = [
-    ../modules/gnome.nix
-    ../modules/emacs/emacs.nix
+    inputs.agenix.nixosModules.default
+    inputs.home-manager.nixosModules.home-manager
   ];
-  config = {
-    nix = {
-      package = pkgs.lib.mkForce pkgs.nixVersions.nix_2_23;
-      settings = {
-        trusted-users = [ "root" "leonardo" ];
-        auto-optimise-store = true;
-      };
-      gc = {
-        automatic = true;
-        dates = "weekly";
-        options = "--delete-older-than 30d";
-      };
+  options.santi-modules = { 
+    default-user.enable = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enables default user configuration and ssh access";
     };
-
-    environment.systemPackages = with pkgs;[
-      prismlauncher
-      rage
-    ];
-
-  
-    nixpkgs = {
-      config.allowUnfree = true;
-      config.allowUnfreePredicate = _: true;
-    };
-    programs.bash = {
-      vteIntegration = true;
-      enableLsColors = true;
-      completion.enable = true;
-      promptInit =
-        ''
-          PS1="\[\033[1;95m\][\h]\[\033[0m\] \[\033[0;32m\]\w\[\033[0m\] :: "
-          [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && source "$EAT_SHELL_INTEGRATION_DIR/bash"
-        '';
-    };
-    fonts = {
-      fontconfig = {
-        enable = true;
-        defaultFonts = {
-          monospace =  [ "Iosevka" "IPAGothic" ];
-          serif = [ "DejaVu Serif" "IPAPMincho" ];
-        };
-      };
-      packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "Iosevka" "FiraCode" ]; })
-        ipafont
-        kochi-substitute
-        dejavu_fonts
-      ];
-    };
-    
-    programs.steam = {
-      enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    };
-    programs.direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-    programs.ssh.startAgent = true;
-    services.pipewire = {
-      enable = true;
-      extraConfig.pipewire = {
-        "context.properties"."module.x11.bell" = false;
-      };
-    };
-    services.openssh = {
-      enable = true;
-      settings = {
-        KbdInteractiveAuthentication = false;
-        PasswordAuthentication = false;
-      };
-    };
+    mu.enable = mkEnableOption "Enables mu, mbsync and msmtp";
+    firefox.enable = mkEnableOption "Enables firefox";
+  };
+  config = mkIf config.santi-modules.default-user.enable {
+    environment.systemPackages = [
+      pkgs.rage
+    ] ++ (if cfg.mu.enable then [ pkgs.parallel ] else []);
     users.mutableUsers = false;
     users.users.leonardo = {
       isNormalUser = true;
@@ -87,52 +25,87 @@ in
       extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.bashInteractive;
       hashedPasswordFile = config.age.secrets.user-pass.path;
-      openssh.authorizedKeys.keys = [ (builtins.readFile ../secrets/user-ssh-key.pub)] ++  builtins.attrValues (hosts-pub-keys);
+      openssh.authorizedKeys.keys = [ (builtins.readFile ../secrets/user-ssh-key.pub)] ++ builtins.attrValues (import ../secrets/host-pub-keys.nix);
     };
-
-    age = {
-      secrets = {
-        user-ssh-key = {
-          file = ../secrets/user-ssh-key.age;
-          path = "/home/leonardo/.ssh/id_ed25519";
-          owner = "leonardo";
-          group = "users";
-        };
-      } // (builtins.foldl' (acc: filename: acc // {
-        ${filename} = {
-          file = ../secrets/${filename}.age;
-          owner = "leonardo";
-          group = "users";
-        };
-      }) {} [ "personal-mail" "work-mail" "university-mail" "authinfo" "user-pass" ]);
+    age.secrets = let
+      with-perms = name: {
+        file = ../secrets/${name}.age;
+        owner = "leonardo";
+        group = "users";
+      };
+    in {
+      user-pass = with-perms "user-pass";
+      user-ssh-key = (with-perms "user-ssh-key") // {
+        path = "/home/leonardo/.ssh/id_ed25519";
+      };
+    } // (optionalAttrs cfg.mu.enable (let
+      mails = ["work-mail" "personal-mail" "university-mail"];
+      mail-cfg = map (n: {name = n; value = with-perms n;}) mails;
+    in
+      listToAttrs mail-cfg))
+    // (optionalAttrs cfg.services.ddns.enable ({
+      cloudflare = with-perms "cloudflare";
+    }));
+    programs.ssh.startAgent = true;
+    services.openssh = {
+      enable = true;
+      settings = {
+        KbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+      };
     };
-    services.gnome.gnome-browser-connector.enable = true;
     home-manager = {
       backupFileExtension = "backup";
       useGlobalPkgs = true;
       useUserPackages = true;
-      users.leonardo = { pkgs, ... } : {
-        imports = [ ./../modules/gnome-config.nix ];
+      users.leonardo = {
+        imports = [ (import ./gnome/gnome-config.nix config.santi-modules) ];
         home = {
-          file.".ssh/id_ed25519.pub".source = ../secrets/user-ssh-key.pub;
-          file.".mozilla/firefox/leonardo/chrome/firefox-gnome-theme".source = inputs.firefox-gnome-theme;
-          username = "leonardo";
-          homeDirectory = "/home/leonardo";
           stateVersion = "23.05";
-          sessionVariables.GTK_THEME = "Adwaita-dark";
-          packages = with pkgs; [
+          file.".ssh/id_ed25519.pub".source = ../secrets/user-ssh-key.pub;
+          file.".mozilla/firefox/leonardo/chrome/firefox-gnome-theme" =  mkIf cfg.firefox.enable { source = inputs.firefox-gnome-theme; };
+          packages = lib.optionals cfg.desktop-environment.enable (with pkgs; [
             discord
             slack
             whatsapp-for-linux
             telegram-desktop
-          ];
+          ]);
         };
-        
         programs = {
-          firefox = {
+          bash = {
             enable = true;
+            enableCompletion = true;
+            initExtra = ''
+              shopt -s -q autocd
+              shopt -s no_empty_cmd_completion
+            '';
+          };
+          fzf = {
+            enable = true;
+            enableBashIntegration = true;
+          };
+          git = {
+            enable = true;
+            lfs.enable = true;
+            diff-so-fancy.enable = true;
+            extraConfig = {
+              user = {
+                name = "Leonardo Santiago";
+                email = "leonardo.ribeiro.santiago@gmail.com";
+                signingkey = "~/.ssh/id_ed25519";
+              };
+              color.ui = true;
+              gpg.format = "ssh";
+              commit.gpgsign = true;
+            };
+          };
+          mu.enable = cfg.mu.enable;
+          msmtp.enable = cfg.mu.enable;
+          mbsync.enable = cfg.mu.enable;
+          firefox = {
+            enable = cfg.firefox.enable;
             package = pkgs.firefox.override {  # nixpkgs' firefox/wrapper.nix
-              nativeMessagingHosts = [
+              nativeMessagingHosts = optional cfg.gnome.enable [
                 pkgs.gnome-browser-connector
               ];
             };
@@ -180,45 +153,12 @@ in
               };
             };
           };
-          bash = {
-            enable = true;
-            enableVteIntegration = true;
-            enableCompletion = true;
-            initExtra = ''
-              shopt -s -q autocd
-              shopt -s no_empty_cmd_completion
-            '';
-          };
-          fzf = {
-            enable = true;
-            enableBashIntegration = true;
-          };
-          git = {
-            enable = true;
-            lfs.enable = true;
-            diff-so-fancy.enable = true;
-            extraConfig = {
-              user = {
-                name = "Leonardo Santiago";
-                email = "leonardo.ribeiro.santiago@gmail.com";
-                signingkey = "~/.ssh/id_ed25519";
-              };
-              color.ui = true;
-              gpg.format = "ssh";
-              commit.gpgsign = true;
-            };
-          };
-          mu.enable = true;
-          msmtp.enable = true;
-          mbsync.enable = true;
         };
-
-        services.mbsync = {
+        services.mbsync = mkIf cfg.mu.enable {
           enable = true;
           frequency = "*:0/5";
         };
-        
-        accounts.email.accounts = {
+        accounts.email.accounts = mkIf cfg.mu.enable {
           personal = {
             address = "leonardo.ribeiro.santiago@gmail.com";
             userName = "leonardo.ribeiro.santiago@gmail.com";
@@ -268,6 +208,5 @@ in
         };
       };
     };
-    
   };
 }

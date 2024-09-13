@@ -33,35 +33,23 @@
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
     };
-    mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank?ref=2024-05-06-hosts-in-nix";
+    mixrank.url = "path:///home/leonardo/mx/mixrank";
   };
 
   outputs = { self, nixpkgs, home-manager, agenix, mixrank, ... } @ inputs :
     let
-      inherit (builtins) listToAttrs readDir attrNames;
-      system = "x86_64-linux";
-      hosts = attrNames (readDir ./hosts);
-      defaultNixosSystem = host: nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs hosts; };
+      inherit (builtins) readDir attrNames listToAttrs split head;
+      modules = map (p: import ./modules/${p}) (attrNames (readDir ./modules));
+      make-config-named = host: nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/${host}/configuration.nix
-          ./users/leonardo.nix
-          home-manager.nixosModules.home-manager
-          agenix.nixosModules.default
-          mixrank.nixosModules.dev-machine
-        ];
+          ./hosts/${host}.nix
+        ] ++ modules;
       };
+      get-basename = n: head (split "\\." n);
+      hosts-names = map get-basename (attrNames (readDir ./hosts));
+      nixos-configs = map (h: { name= h; value = make-config-named h;}) hosts-names;
     in {
-      nixosConfigurations =
-        (listToAttrs (map (host: {name = host; value = defaultNixosSystem host; }) hosts))
-         // { iori = nixpkgs.lib.nixosSystem {
-                system = "aarch64-linux";
-                specialArgs = { inherit inputs; };
-                modules = [
-                  ./hosts/iori/configuration.nix
-                ];
-              };
-            };
+      nixosConfigurations = listToAttrs nixos-configs;
     };
 }
