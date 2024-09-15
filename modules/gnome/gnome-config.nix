@@ -11,7 +11,7 @@ santi-modules:
       enable-hot-corners=false;
       font-antialiasing="grayscale";
       font-hinting="slight";
-      gtk-theme="Graphite-Dark";
+      gtk-theme="Adwaita";
       icon-theme="Tela-brown-light";
       show-battery-percentage=true;
     };
@@ -34,18 +34,16 @@ santi-modules:
     "org/gnome/shell" = {
       enabled-extensions = [
         "appindicatorsupport@rgcjonas.gmail.com"
-        "light-style@gnome-shell-extensions.gcampax.github.com"
-        "Vitals@CoreCoding.com"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
         "x11gestures@joseexposito.github.io"
-        "gsconnect@andyholmes.github.io"
+        "system-monitor@gnome-shell-extensions.gcampax.github.com"
       ];
       disabled-extensions= [
         "windowsNavigator@gnome-shell-extensions.gcampax.github.com"
         "apps-menu@gnome-shell-extensions.gcampax.github.com"
       ];
     };
-    "org/gnome/shell/extensions/user-theme".name = "Graphite-Dark";
+    "org/gnome/shell/extensions/user-theme".name = "Graphite";
     "org/honem/shell/extensions/vitals" = {
       hide-zeros = true;
       position-in-panel = "0";
