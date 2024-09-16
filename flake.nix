@@ -34,9 +34,13 @@
       flake = false;
     };
     mixrank.url = "path:///home/leonardo/mx/mixrank";
+    blog = {
+      url = "github:o-santi/o-santi.github.io";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, mixrank, ... } @ inputs :
+  outputs = { self, nixpkgs, ... } @ inputs :
     let
       inherit (builtins) readDir attrNames listToAttrs split head;
       modules = map (p: import ./modules/${p}) (attrNames (readDir ./modules));

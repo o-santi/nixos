@@ -14,7 +14,10 @@
     default-user.enable = true;
     basic.enable = true;
     font-config.enable = false;
-    services.ddns.enable = true;
+    services = {
+      ddns.enable = true;
+      blog.enable = true;
+    };
   };
   
   boot = {

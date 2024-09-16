@@ -9,10 +9,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  santi-modules = {
-    desktop-environment.enable = true;
-    services.ddns.enable = true;
-  };
+  santi-modules.desktop-environment.enable = true;
   # Bootloader.
   boot = {
     loader.systemd-boot.enable = true;
