@@ -19,11 +19,19 @@ in {
     };
   };
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 80 ];
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
     # TODO: enable SSL
     services.nginx = {
       enable = true;
-      virtualHosts.${cfg.url}.root = blog;
+      virtualHosts.${cfg.url} = {
+        addSSL = true;
+        enableACME = true;
+        root = blog;
+      };
+    };
+    security.acme = {
+      acceptTerms = true;
+      certs."santi.net.br".email = "leonardo.ribeiro.santiago@gmail.com";
     };
   };
 }

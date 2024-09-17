@@ -86,6 +86,9 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   :hook (marginalia-mode . nerd-icons-completion-marginal)
   :config
   (nerd-icons-completion-mode))
+
+(use-package nerd-icons-dired
+  :hook (dired-mode . nerd-icons-dired-mode))
 #+end_src
 ** Direnv
 To integrate with nix shells.

@@ -159,14 +159,17 @@
         "nixpkgs_old": "nixpkgs_old"
       },
       "locked": {
-        "lastModified": 1726261422,
-        "narHash": "sha256-6HfQRP2enWknskI102YNEgMBeBdGDs16cPs7Gf52+7k=",
-        "path": "/home/leonardo/mx/mixrank",
-        "type": "path"
+        "lastModified": 1726523967,
+        "narHash": "sha256-OgwrAeYvbCMO6vzo9uk9BZ+sIU2shs10Rmgzh7rh184=",
+        "ref": "refs/heads/master",
+        "rev": "f6f43f3b723851918085e8b62e10f618e1b138f8",
+        "revCount": 65611,
+        "type": "git",
+        "url": "ssh://git@gitlab.com/mixrank/mixrank"
       },
       "original": {
-        "path": "/home/leonardo/mx/mixrank",
-        "type": "path"
+        "type": "git",
+        "url": "ssh://git@gitlab.com/mixrank/mixrank"
       }
     },
     "nixos-hardware": {

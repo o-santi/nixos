@@ -1,19 +1,16 @@
 { pkgs, inputs, lib, config,  ...}:
 let
   outside-emacs = with pkgs; [
-    (python3.withPackages (p: (with p; [
-      python-lsp-server
-      python-lsp-ruff
-    ])))
     nil
     ripgrep
     emacs-lsp-booster
   ];
-  org-tangle-elisp-blocks = (pkgs.callPackage ./org.nix {inherit pkgs; inherit (inputs) from-elisp;}).org-tangle ({ language, flags } :
-    let is-elisp = (language == "emacs-lisp") || (language == "elisp");
-        is-tangle = if flags ? ":tangle" then
-          flags.":tangle" == "yes" || flags.":tangle" == "y" else false;
-    in is-elisp && is-tangle
+  org-tangle-elisp-blocks = (pkgs.callPackage ./org.nix {inherit pkgs; inherit (inputs) from-elisp;}).org-tangle ({ language, flags } : let
+    is-elisp = (language == "emacs-lisp") || (language == "elisp");
+    is-tangle = if flags ? ":tangle" then
+      flags.":tangle" == "yes" || flags.":tangle" == "y" else false;
+  in
+    is-elisp && is-tangle
   );
   config-el = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./README.org));
   emacs = pkgs.emacsWithPackagesFromUsePackage {
@@ -23,6 +20,7 @@ let
       withAlsaLib = true;
       withSystemd = true;
       withToolkitScrollBars = true;
+      withImageMagick = true;
     };
     override = epkgs: epkgs // {
       eglot-booster = pkgs.callPackage ./eglot-booster.nix {
@@ -46,10 +44,8 @@ in with lib; {
     nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
     environment.systemPackages = [
       emacs
-      (pkgs.aspellWithDicts (dicts: with dicts; [ pt_BR en en-computers ]))
     ] ++ outside-emacs;
     fonts.packages = with pkgs; [
-      emacs-all-the-icons-fonts
       (nerdfonts.override { fonts = ["Iosevka"]; })
     ];
   };

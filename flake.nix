@@ -33,7 +33,7 @@
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
     };
-    mixrank.url = "path:///home/leonardo/mx/mixrank";
+    mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank";
     blog = {
       url = "github:o-santi/o-santi.github.io";
       flake = false;
