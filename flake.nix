@@ -43,7 +43,7 @@
   outputs = { self, nixpkgs, ... } @ inputs :
     let
       inherit (builtins) readDir attrNames listToAttrs split head;
-      modules = map (p: import ./modules/${p}) (attrNames (readDir ./modules));
+      modules = map (p: ./modules/${p}) (attrNames (readDir ./modules));
       make-config-named = host: nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
