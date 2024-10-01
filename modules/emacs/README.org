@@ -18,8 +18,12 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 #+begin_src emacs-lisp :tangle yes
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(global-display-line-numbers-mode 1)
 
 (setq use-short-answers t)
+(setq inhibit-startup-message t)
 
 (setq ring-bell-function 'ignore)
 (setq-default indent-tabs-mode nil)
