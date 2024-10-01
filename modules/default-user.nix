@@ -46,9 +46,11 @@ in {
       mail-cfg = map (n: {name = n; value = with-perms n;}) mails;
     in
       listToAttrs mail-cfg))
-    // (optionalAttrs cfg.services.ddns.enable ({
+    // (optionalAttrs cfg.services.ddns.enable {
       cloudflare = with-perms "cloudflare";
-    }));
+    }) // (optionalAttrs cfg.emacs.enable {
+      authinfo = with-perms "authinfo";
+    });
     programs.ssh.startAgent = true;
     services.openssh = {
       enable = true;

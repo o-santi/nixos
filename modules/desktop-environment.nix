@@ -12,7 +12,7 @@
       basic.enable = true;
     };
 
-    services.printing.enable = true;
+    services.printing.enable = false; # disabled until CUPS CVE is fixed
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {

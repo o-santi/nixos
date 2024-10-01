@@ -179,7 +179,7 @@
         "narHash": "sha256-p7Rrk0BSYNBvkQ5fidkUvbM/TnA15g/7ldLa/r59NkI=",
         "ref": "refs/heads/master",
         "rev": "0b77b4f2cb1fd0ec3df9592b04c914d1a98b337b",
-        "revCount": 65737,
+        "revCount": 65861,
         "type": "git",
         "url": "ssh://git@gitlab.com/mixrank/mixrank"
       },
