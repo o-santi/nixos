@@ -48,6 +48,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/${host}.nix
+          inputs.home-manager.nixosModules.default
         ] ++ modules;
       };
       get-basename = n: head (split "\\." n);
