@@ -159,11 +159,11 @@
         "nixpkgs_old": "nixpkgs_old"
       },
       "locked": {
-        "lastModified": 1727799934,
-        "narHash": "sha256-89CKOrqXU5tpWt9ek7uf8WMtyxxeqaYXXWy19pM0sHg=",
+        "lastModified": 1727782603,
+        "narHash": "sha256-UmewZwqbKUNMDnm+llE5dftOIUr/nsjXZTYYkoOXYqc=",
         "ref": "refs/heads/master",
-        "rev": "29b065d73e54e884ee8233f82e77b8e14deb2b46",
-        "revCount": 66086,
+        "rev": "fbe08b1c26cabc5a5816bf0d44623588205ec287",
+        "revCount": 66077,
         "type": "git",
         "url": "ssh://git@gitlab.com/mixrank/mixrank"
       },

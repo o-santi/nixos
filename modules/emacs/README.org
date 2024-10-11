@@ -217,11 +217,8 @@ Completion popup system
 ** Compilation
 Add support for ansi escape codes in compilation
 #+begin_src emacs-lisp :tangle yes
-(use-package xterm-color
-  :custom (compilation-environment '("TERM=xterm-256color")))
-(defun my/advice-compilation-filter (f proc string)
-  (funcall f proc (xterm-color-filter string)))
-(add-hook 'compilation-filter-hook #'my/advice-compilation-filter)
+(use-package ansi-color
+    :hook (compilation-filter . ansi-color-compilation-filter))
 #+end_src
 
 ** Pdf reader
