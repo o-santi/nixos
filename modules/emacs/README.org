@@ -92,7 +92,9 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   (nerd-icons-completion-mode))
 
 (use-package nerd-icons-dired
-  :hook (dired-mode . nerd-icons-dired-mode))
+  :hook (dired-mode . nerd-icons-dired-mode)
+  :custom (dired-listing-switches "-alh"))
+
 #+end_src
 ** Direnv
 To integrate with nix shells.
@@ -171,11 +173,6 @@ Better help defaults
 
 (use-package which-key
   :config (which-key-mode))
-#+end_src
-** Dirvish
-I wanna try some QoL addons for dired.
-#+begin_src emacs-lisp :tangle yes
-(use-package dirvish)
 #+end_src
 ** Windows
 I wanna test out =winner-mode=
