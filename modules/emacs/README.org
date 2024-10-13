@@ -174,12 +174,6 @@ Better help defaults
 (use-package which-key
   :config (which-key-mode))
 #+end_src
-** Windows
-I wanna test out =winner-mode=
-#+begin_src emacs-lisp :tangle yes
-(use-package winner
-  :config (winner-mode))
-#+end_src
 ** Bind key
 #+begin_src emacs-lisp :tangle yes
 (use-package bind-key)
@@ -215,7 +209,8 @@ Completion popup system
 Add support for ansi escape codes in compilation
 #+begin_src emacs-lisp :tangle yes
 (use-package ansi-color
-    :hook (compilation-filter . ansi-color-compilation-filter))
+  :ensure nil
+  :hook (compilation-filter . ansi-color-compilation-filter))
 #+end_src
 
 ** Pdf reader
@@ -396,8 +391,8 @@ Actual mu4e definition
   :custom
   (read-mail-command 'mu4e)
   (mu4e-sent-messages-behavior 'delete)
-  (mu4e-index-cleanup nil)
-  (mu4e-index-lazy-check t)
+  (mu4e-index-cleanup t)
+  (mu4e-index-lazy-check nil)
   (mu4e-use-fancy-chars (display-graphic-p))
   (mu4e-confirm-quit nil)
   (mu4e-eldoc-support t)
