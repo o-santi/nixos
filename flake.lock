@@ -28,11 +28,11 @@
     "blog": {
       "flake": false,
       "locked": {
-        "lastModified": 1726451852,
-        "narHash": "sha256-fde9e17Rr/T1v1Rb5mQe37wl158FFx4csb0haGxivkU=",
+        "lastModified": 1729812499,
+        "narHash": "sha256-+vtJwxWSpBn56gutVEcT9xRnDjyNIz6DWvce2spG68I=",
         "owner": "o-santi",
         "repo": "o-santi.github.io",
-        "rev": "dabdc2f6be7d7ec853263f64ea2acc11536f801f",
+        "rev": "daca93760b5e4b250eabe026e35865d2932937ec",
         "type": "github"
       },
       "original": {
@@ -159,11 +159,11 @@
         "nixpkgs_old": "nixpkgs_old"
       },
       "locked": {
-        "lastModified": 1728750572,
-        "narHash": "sha256-38bTh612z3fj7BWYLRsOtSny/7OPG4VQYrK0sXE2fng=",
+        "lastModified": 1729629594,
+        "narHash": "sha256-JIHFiZGwFav4Ach2YTSH/og3dTwOWdEs0oHGCJd8TIo=",
         "ref": "refs/heads/master",
-        "rev": "28fc43eac6233d68f183677f1b68aaa7aa80f568",
-        "revCount": 66566,
+        "rev": "3dc55429c12d232a6dac945552423957a460dce6",
+        "revCount": 67054,
         "type": "git",
         "url": "ssh://git@gitlab.com/mixrank/mixrank"
       },

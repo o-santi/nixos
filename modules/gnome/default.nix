@@ -12,6 +12,7 @@
       graphite-gtk-theme
       x11-gestures
       gsconnect
+      open-bar
     ]);
     
     environment.gnome.excludePackages = with pkgs; [
@@ -34,7 +35,7 @@
     services.xserver = {
       displayManager.gdm = {
         enable = true;
-        wayland = false;
+        wayland = true;
       };
       desktopManager.gnome.enable = true;
     };

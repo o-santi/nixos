@@ -25,6 +25,7 @@ santi-modules:
       dynamic-workspaces= true;
       edge-tiling= true;
       workspaces-only-on-primary= true;
+      experimental-features = [ "scale-monitor-framebuffer" "variable-refresh-rate"];
     };
     "org/gnome/settings-daemon/plugins/power" = {
       power-button-action="hibernate";
@@ -36,6 +37,7 @@ santi-modules:
         "appindicatorsupport@rgcjonas.gmail.com"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
         "x11gestures@joseexposito.github.io"
+        "openbar@neuromorph"
         "system-monitor@gnome-shell-extensions.gcampax.github.com"
       ];
       disabled-extensions= [
@@ -44,12 +46,22 @@ santi-modules:
       ];
     };
     "org/gnome/shell/extensions/user-theme".name = "Graphite";
-    "org/honem/shell/extensions/vitals" = {
-      hide-zeros = true;
-      position-in-panel = "0";
-      show-battery = false;
-      show-temperature = true;
-    };
     "org/gnome/shell/app-switcher".current-workspace-only = true;
+    "org/gnome/shell/extensions/openbar" = {
+      bartype="Islands";
+      apply-accent-shell= true;
+      apply-all-shell = false;
+      apply-menu-notif = true;
+      apply-menu-shell = true;
+      autotheme-dark="Dark";
+      autotheme-font= true;
+      autotheme-light= "Light";
+      autotheme-refresh= true;
+      color-scheme="prefer-dark";
+      cust-margin-wmax=false;
+      margin = 0.0;
+      wmaxbar = true;
+      border-wmax = true;
+    };
   };
 }

@@ -31,7 +31,7 @@ in {
     };
     security.acme = {
       acceptTerms = true;
-      certs."santi.net.br".email = "leonardo.ribeiro.santiago@gmail.com";
+      certs.${cfg.url}.email = "leonardo.ribeiro.santiago@gmail.com";
     };
   };
 }

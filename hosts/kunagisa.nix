@@ -8,6 +8,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
   santi-modules.desktop-environment.enable = true;
+  santi-modules.services.cgit.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
   # Bootloader.
   boot = {
     loader = {
@@ -47,6 +49,10 @@
   swapDevices = [
     { device = "/dev/disk/by-uuid/1a204e5c-05cb-4e7f-b859-927fb024fb12"; }
   ];
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   system.stateVersion = "23.05";
 }
