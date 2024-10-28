@@ -108,6 +108,8 @@ Configurations for magit
 #+begin_src emacs-lisp :tangle yes
 (use-package magit
   :custom (magit-process-finish-apply-ansi-colors t))
+(use-package magit-delta
+  :hook (magit-mode . magit-delta-mode))
 #+end_src
 
 *** Forge

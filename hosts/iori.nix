@@ -17,6 +17,7 @@
     services = {
       ddns.enable = true;
       blog.enable = true;
+      cgit.enable = true;
     };
   };
   
