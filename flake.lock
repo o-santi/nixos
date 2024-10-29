@@ -119,22 +119,6 @@
         "type": "github"
       }
     },
-    "from-elisp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1694631482,
-        "narHash": "sha256-fTdDUf+ITtLK/zHWDa5RCZdUj1qT/carlHrHVPuUxlo=",
-        "owner": "o-santi",
-        "repo": "from-elisp",
-        "rev": "3177e75d727232a9301822742f4d0bd23bb277c6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "o-santi",
-        "repo": "from-elisp",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -159,11 +143,11 @@
         "nixpkgs_old": "nixpkgs_old"
       },
       "locked": {
-        "lastModified": 1730162224,
-        "narHash": "sha256-V238jWFRp2XSzRYdcrmHJ6Z0Ut29agcOCr193H/+tB8=",
+        "lastModified": 1730190461,
+        "narHash": "sha256-bX0AYh7W+qusGj+tEwARVmkDXe5UjhPQz6yJh3fAWYg=",
         "ref": "refs/heads/master",
-        "rev": "4229b5aaf305291ffb4966d33645255cdbeca9da",
-        "revCount": 67286,
+        "rev": "112f5c65983f23c63de51ce34bb0669f62605184",
+        "revCount": 67288,
         "type": "git",
         "url": "ssh://git@gitlab.com/mixrank/mixrank"
       },
@@ -274,7 +258,6 @@
         "blog": "blog",
         "emacs-overlay": "emacs-overlay",
         "firefox-gnome-theme": "firefox-gnome-theme",
-        "from-elisp": "from-elisp",
         "home-manager": "home-manager",
         "mixrank": "mixrank",
         "nixos-hardware": "nixos-hardware",

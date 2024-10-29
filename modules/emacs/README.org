@@ -299,7 +299,7 @@ Try to use the package.
 ** Org mode
 #+begin_src emacs-lisp :tangle yes
 (use-package org
-  :ensure 'nil
+  :ensure nil
   :hook (org-mode . org-indent-mode)
   :bind ("C-c a" . org-agenda)
   :config

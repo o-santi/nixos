@@ -1,17 +1,5 @@
 {
   description = "My personal devices' flake modules";
-
-  nixConfig = {
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-      "s3://mr-nixcache-icenyeamyubu?profile=mixrank"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "mr-nixcache-icenyeamyubu:q2ulb+bD5NCbp9nvvHod39/1qNqnYX0ACb8eQckb7pI="
-    ];
-  };
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -24,10 +12,6 @@
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    from-elisp = {
-      url = "github:o-santi/from-elisp";
-      flake = false;
     };
     firefox-gnome-theme = {
       url = "github:rafaelmardojai/firefox-gnome-theme";
