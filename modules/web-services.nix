@@ -137,7 +137,7 @@
       user = "leonardo";
       group = "users";
       settings.provider."cloudflare.com" = {
-        hostname="santi.net.br";
+        hostname="ssh.santi.net.br";
         username="santi.net.br";
         proxied = false;
         include = config.age.secrets.cloudflare.path;

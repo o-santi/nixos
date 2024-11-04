@@ -8,7 +8,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
   santi-modules.desktop-environment.enable = true;
-  santi-modules.services.cgit.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   # Bootloader.
   boot = {
