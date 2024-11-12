@@ -6,10 +6,11 @@
   };
   config = mkIf config.santi-modules.basic.enable {
     nix = {
-      package = pkgs.lib.mkForce pkgs.nixVersions.nix_2_23;
+      package = pkgs.lib.mkForce pkgs.nixVersions.nix_2_20;
       settings = {
         trusted-users = [ "root" "leonardo" ];
         auto-optimise-store = true;
+        experimental-features = [ "nix-command" "flakes" ];
       };
       gc = {
         automatic = true;
