@@ -24,21 +24,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... } @ inputs :
-    let
-      inherit (builtins) readDir attrNames listToAttrs split head;
-      modules = map (p: ./modules/${p}) (attrNames (readDir ./modules));
-      make-config-named = host: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/${host}.nix
-          inputs.home-manager.nixosModules.default
-        ] ++ modules;
-      };
-      get-basename = n: head (split "\\." n);
-      hosts-names = map get-basename (attrNames (readDir ./hosts));
-      nixos-configs = map (h: { name= h; value = make-config-named h;}) hosts-names;
-    in {
-      nixosConfigurations = listToAttrs nixos-configs;
+  outputs = { self, nixpkgs, ... } @ inputs : let
+    inherit (builtins) readDir attrNames listToAttrs split head;
+    modules = map (p: ./modules/${p}) (attrNames (readDir ./modules));
+    make-config-named = host: nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./hosts/${host}.nix
+        inputs.home-manager.nixosModules.default
+      ] ++ modules;
     };
+    get-basename = n: head (split "\\." n);
+    hosts-names = map get-basename (attrNames (readDir ./hosts));
+    nixos-configs = map (h: { name= h; value = make-config-named h;}) hosts-names;
+  in {
+    nixosConfigurations = listToAttrs nixos-configs;
+  };
 }
