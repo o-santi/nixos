@@ -18,9 +18,10 @@
       flake = false;
     };
     mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank";
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = { self, nixpkgs, ... } @ inputs : let
+  outputs = { self, nixpkgs, deploy-rs, ... } @ inputs : let
     inherit (builtins) readDir attrNames listToAttrs split head;
     modules = map (p: ./modules/${p}) (attrNames (readDir ./modules));
     make-config-named = host: nixpkgs.lib.nixosSystem {
@@ -33,7 +34,16 @@
     get-basename = n: head (split "\\." n);
     hosts-names = map get-basename (attrNames (readDir ./hosts));
     nixos-configs = map (h: { name= h; value = make-config-named h;}) hosts-names;
-  in {
+  in rec {
     nixosConfigurations = listToAttrs nixos-configs;
+    deploy.nodes.iori = {
+      hostname = "ssh.santi.net.br";
+      remoteBuild = true;
+      interactiveSudo = true;
+      profiles.system = {
+        user = "root";
+        path = deploy-rs.lib.aarch64-linux.activate.nixos nixosConfigurations.iori;
+      };
+    };
   };
 }

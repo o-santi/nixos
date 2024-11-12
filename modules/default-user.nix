@@ -15,8 +15,9 @@ in {
     firefox.enable = mkEnableOption "Enables firefox";
   };
   config = mkIf config.santi-modules.default-user.enable {
-    environment.systemPackages = [
-      pkgs.rage
+    environment.systemPackages = with pkgs; [
+      rage
+      deploy-rs
     ] ++ (if cfg.mu.enable then [ pkgs.parallel ] else []);
     users.mutableUsers = false;
     users.users.leonardo = {
