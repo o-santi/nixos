@@ -25,22 +25,6 @@
         "type": "github"
       }
     },
-    "blog": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1729812499,
-        "narHash": "sha256-+vtJwxWSpBn56gutVEcT9xRnDjyNIz6DWvce2spG68I=",
-        "owner": "o-santi",
-        "repo": "o-santi.github.io",
-        "rev": "daca93760b5e4b250eabe026e35865d2932937ec",
-        "type": "github"
-      },
-      "original": {
-        "owner": "o-santi",
-        "repo": "o-santi.github.io",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -255,7 +239,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "blog": "blog",
         "emacs-overlay": "emacs-overlay",
         "firefox-gnome-theme": "firefox-gnome-theme",
         "home-manager": "home-manager",

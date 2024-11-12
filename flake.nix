@@ -18,10 +18,6 @@
       flake = false;
     };
     mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank";
-    blog = {
-      url = "github:o-santi/o-santi.github.io";
-      flake = false;
-    };
   };
 
   outputs = { self, nixpkgs, ... } @ inputs : let
