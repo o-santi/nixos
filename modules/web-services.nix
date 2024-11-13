@@ -14,7 +14,7 @@
       };
     };
     systemd.tmpfiles.rules = [
-      "d ${git-repo-path} 0755 git users -"
+      "d ${git-repo-path} 0755 git users"
     ];
     services.cgit.santi = let
       org2html = pkgs.writeShellScript "org2md" ''
@@ -98,7 +98,7 @@
       certs.${cfg.blog.url}.email = "leonardo.ribeiro.santiago@gmail.com";
     };
     systemd.tmpfiles.rules = [
-      "d ${blog-public-path} 0755 git users -"
+      "d ${blog-public-path} 0755 git users"
     ];
     systemd.services."blog-prepare-git-repo" = {
       wantedBy = [ "multi-user.target" ];
