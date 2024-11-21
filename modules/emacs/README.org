@@ -36,7 +36,7 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 (use-package modus-themes
   :ensure t)
 ;; (use-package kanagawa-theme)
-(load-theme 'leuven-dark t)
+(load-theme 'modus-operandi-tinted t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
