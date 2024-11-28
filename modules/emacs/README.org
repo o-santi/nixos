@@ -21,7 +21,7 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 (scroll-bar-mode -1)
 
 (global-display-line-numbers-mode 1)
-
+(setq default-frame-alist '((fullscreen . maximized)))
 (setq use-short-answers t)
 (setq inhibit-startup-message t)
 
@@ -223,7 +223,7 @@ Completion popup system
 #+end_src
 ** Vterm
 #+begin_src emacs-lisp :tangle yes
-(use-package eat
+(use-package vterm
   :ensure t)
 #+end_src
 ** Compilation
