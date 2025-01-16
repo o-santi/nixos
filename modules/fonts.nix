@@ -14,7 +14,8 @@
         };
       };
       packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "Iosevka" "FiraCode" ]; })
+        nerd-fonts.iosevka
+        nerd-fonts.fira-code
         ipafont
         kochi-substitute
         dejavu_fonts

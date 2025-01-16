@@ -47,7 +47,7 @@ in with lib; {
       emacs
     ] ++ outside-emacs;
     fonts.packages = with pkgs; [
-      (nerdfonts.override { fonts = ["Iosevka"]; })
+      nerd-fonts.iosevka
     ];
   };
 }
