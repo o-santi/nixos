@@ -5,6 +5,7 @@
     environment.systemPackages = with pkgs; [
       gnome-tweaks
       tela-icon-theme
+      hackneyed
     ] ++ (with gnomeExtensions; [
       appindicator
       vitals
@@ -12,7 +13,7 @@
       graphite-gtk-theme
       x11-gestures
       gsconnect
-      open-bar
+      openweather-refined
     ]);
     
     environment.gnome.excludePackages = with pkgs; [

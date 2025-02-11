@@ -20,13 +20,19 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(global-display-line-numbers-mode 1)
+(setq gc-cons-threshold 100000000)
+
+(global-display-line-numbers-mode +1)
+(line-number-mode +1)
+(column-number-mode +1)
 (setq default-frame-alist '((fullscreen . maximized)))
 (setq use-short-answers t)
 (setq inhibit-startup-message t)
+(setq-default indicate-empty-lines t)
 
 (setq ring-bell-function 'ignore)
-(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4
+              indent-tabs-mode nil)
 
 (setq window-combination-resize t)
 #+end_src
@@ -35,8 +41,10 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 #+begin_src emacs-lisp :tangle yes
 (use-package modus-themes
   :ensure t)
+(use-package ef-themes
+  :ensure t)
 ;; (use-package kanagawa-theme)
-(load-theme 'modus-operandi-tinted t)
+(load-theme 'ef-day t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
@@ -56,6 +64,11 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 #+end_src
 
 * Utility
+** Diminish minor modes
+#+begin_src emacs-lisp :tangle yes
+(use-package diminish
+  :ensure t)
+#+end_src
 ** Searching
 #+begin_src emacs-lisp :tangle yes
 (use-package rg
@@ -189,6 +202,7 @@ Better help defaults
 
 (use-package which-key
   :ensure t
+  :dimish which-key-mode
   :config (which-key-mode))
 #+end_src
 ** Bind key
@@ -301,6 +315,7 @@ Try to use the package.
 (use-package org
   :ensure nil
   :hook (org-mode . org-indent-mode)
+  :diminish org-indent-mode
   :bind ("C-c a" . org-agenda)
   :config
   (add-to-list 'org-src-lang-modes '("rust" . rust-ts))

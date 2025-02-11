@@ -12,6 +12,7 @@ santi-modules:
       font-antialiasing="grayscale";
       font-hinting="slight";
       gtk-theme="Adwaita";
+      cursor-theme="Hackneyed";
       icon-theme="Tela-brown-light";
       show-battery-percentage=true;
     };
@@ -35,9 +36,7 @@ santi-modules:
     "org/gnome/shell" = {
       enabled-extensions = [
         "appindicatorsupport@rgcjonas.gmail.com"
-        "user-theme@gnome-shell-extensions.gcampax.github.com"
         "x11gestures@joseexposito.github.io"
-        "openbar@neuromorph"
         "system-monitor@gnome-shell-extensions.gcampax.github.com"
       ];
       disabled-extensions= [
