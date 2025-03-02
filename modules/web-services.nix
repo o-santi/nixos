@@ -136,11 +136,14 @@
       enable = true;
       user = "leonardo";
       group = "users";
-      settings.provider."cloudflare.com" = {
-        hostname="ssh.santi.net.br";
-        username="santi.net.br";
-        proxied = false;
-        include = config.age.secrets.cloudflare.path;
+      settings = {
+        allow-ipv6 = false;
+        provider."cloudflare.com" = {
+          hostname="ssh.santi.net.br";
+          username="santi.net.br";
+          proxied = false;
+          include = config.age.secrets.cloudflare.path;
+        };
       };
     };
   };
