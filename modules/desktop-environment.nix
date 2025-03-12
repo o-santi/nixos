@@ -8,7 +8,7 @@
       games.enable = true;
       mu.enable = true;
       default-user.enable = true;
-      firefox.enable = true;
+      floorp.enable = true;
       basic.enable = true;
     };
 

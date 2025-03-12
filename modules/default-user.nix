@@ -12,7 +12,7 @@ in {
       description = "Enables default user configuration and ssh access";
     };
     mu.enable = mkEnableOption "Enables mu, mbsync and msmtp";
-    firefox.enable = mkEnableOption "Enables firefox";
+    floorp.enable = mkEnableOption "Enables floorp";
   };
   config = mkIf config.santi-modules.default-user.enable {
     environment.systemPackages = with pkgs; [
@@ -70,7 +70,7 @@ in {
           stateVersion = "23.05";
           homeDirectory = "/home/leonardo";
           file.".ssh/id_ed25519.pub".source = ../secrets/user-ssh-key.pub;
-          file.".mozilla/firefox/leonardo/chrome/firefox-gnome-theme" =  mkIf cfg.firefox.enable { source = inputs.firefox-gnome-theme; };
+          # file.".mozilla/firefox/leonardo/chrome/firefox-gnome-theme" =  mkIf cfg.firefox.enable { source = inputs.firefox-gnome-theme; };
           packages = lib.optionals cfg.desktop-environment.enable (with pkgs; [
             vesktop
             slack
@@ -109,13 +109,8 @@ in {
           mu.enable = cfg.mu.enable;
           msmtp.enable = cfg.mu.enable;
           mbsync.enable = cfg.mu.enable;
-          firefox = {
-            enable = cfg.firefox.enable;
-            package = pkgs.firefox.override {  # nixpkgs' firefox/wrapper.nix
-              nativeMessagingHosts = optional cfg.gnome.enable [
-                pkgs.gnome-browser-connector
-              ];
-            };
+          floorp = {
+            enable = cfg.floorp.enable;
             profiles.leonardo = {
               userChrome = ''
                 @import "firefox-gnome-theme/userChrome.css";
@@ -127,11 +122,6 @@ in {
                 "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable customChrome.cs
                 "browser.uidensity" = 0; # Set UI density to normal
                 "svg.context-properties.content.enabled" = true; # Enable SVG context-propertes
-                # firefox-gnome-theme
-                "gnomeTheme.activeTabContrast" = true;
-                "gnomeTheme.hideWebrtcIndicator" = true;
-                "gnomeTheme.bookmarksToolbarUnderTabs" = true;
-                "gnomeTheme.hideSingleTab" = true;
               };
             };
             policies = {
