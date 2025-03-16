@@ -13,10 +13,7 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    firefox-gnome-theme = {
-      url = "github:rafaelmardojai/firefox-gnome-theme";
-      flake = false;
-    };
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank";
     deploy-rs.url = "github:serokell/deploy-rs";
   };

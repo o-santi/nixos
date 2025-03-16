@@ -8,7 +8,6 @@
       games.enable = true;
       mu.enable = true;
       default-user.enable = true;
-      floorp.enable = true;
       basic.enable = true;
     };
 

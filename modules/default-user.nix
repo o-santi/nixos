@@ -12,7 +12,6 @@ in {
       description = "Enables default user configuration and ssh access";
     };
     mu.enable = mkEnableOption "Enables mu, mbsync and msmtp";
-    floorp.enable = mkEnableOption "Enables floorp";
   };
   config = mkIf config.santi-modules.default-user.enable {
     environment.systemPackages = with pkgs; [
@@ -76,6 +75,7 @@ in {
             slack
             whatsapp-for-linux
             telegram-desktop
+            inputs.zen-browser.packages.${system}.default
           ]);
         };
         programs = {
@@ -109,47 +109,6 @@ in {
           mu.enable = cfg.mu.enable;
           msmtp.enable = cfg.mu.enable;
           mbsync.enable = cfg.mu.enable;
-          floorp = {
-            enable = cfg.floorp.enable;
-            profiles.leonardo = {
-              userChrome = ''
-                @import "firefox-gnome-theme/userChrome.css";
-              '';
-              userContent = ''
-                @import "firefox-gnome-theme/userContent.css";
-              '';
-              settings = {
-                "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable customChrome.cs
-                "browser.uidensity" = 0; # Set UI density to normal
-                "svg.context-properties.content.enabled" = true; # Enable SVG context-propertes
-              };
-            };
-            policies = {
-              DisableTelemetry = true;
-              DisableFirefoxStudies = true;
-              EnableTrackingProtection = {
-                Value= true;
-                Locked = true;
-                Cryptomining = true;
-                Fingerprinting = true;
-              };
-              DisablePocket = true;
-              DisableFirefoxAccounts = true;
-              DisableAccounts = true;
-              DisableFirefoxScreenshots = true;
-              OverrideFirstRunPage = "";
-              OverridePostUpdatePage = "";
-              DontCheckDefaultBrowser = true;
-              ExtensionSettings = {
-                "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
-                # uBlock Origin:
-                "uBlock0@raymondhill.net" = {
-                  install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-                  installation_mode = "force_installed";
-                };
-              };
-            };
-          };
         };
         services.mbsync = mkIf cfg.mu.enable {
           enable = true;
