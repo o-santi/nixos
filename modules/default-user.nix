@@ -17,6 +17,7 @@ in {
     environment.systemPackages = with pkgs; [
       rage
       deploy-rs
+      jujutsu
     ] ++ (if cfg.mu.enable then [ pkgs.parallel ] else []);
     users.mutableUsers = false;
     users.users.leonardo = {
