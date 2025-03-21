@@ -420,6 +420,7 @@ Actual mu4e definition
   (mu4e-change-filenames-when-moving t)
   (mu4e-update-interval (* 5 60))
   (mu4e-get-mail-command "parallel mbsync ::: personal work university")
+  (mu4e-compose-format-flowed t)
   (mu4e-headers-fields
    '((:human-date . 10)
      (:flags . 6)

@@ -16,7 +16,7 @@ let
   # );
   # config-el = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./README.org));
   emacs = pkgs.emacsWithPackagesFromUsePackage {
-    package = pkgs.emacs.override {
+    package = pkgs.emacs-unstable.override {
       withGTK3 = true;
       withNativeCompilation = true;
       withAlsaLib = true;
