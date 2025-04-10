@@ -44,7 +44,7 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 (use-package ef-themes
   :ensure t)
 ;; (use-package kanagawa-theme)
-(load-theme 'ef-day t)
+(load-theme 'ef-melissa-dark t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
