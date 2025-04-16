@@ -49,7 +49,7 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 (add-hook 'after-make-frame-functions
           (lambda (frame)
             (select-frame frame)
-            (set-frame-font "Iosevka Nerd Font 12" nil t)))
+            (set-frame-font "DejaVuSansM Nerd Font 12" nil t)))
 #+end_src
 
 ** Backups
@@ -99,7 +99,7 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 (use-package nerd-icons
   :ensure t
   :custom
-  (nerd-icons-font-family "Iosevka Nerd Font"))
+  (nerd-icons-font-family "DejaVuSansM Nerd Font"))
 
 (use-package nerd-icons-completion
   :ensure t
@@ -414,7 +414,7 @@ Actual mu4e definition
   (mu4e-sent-messages-behavior 'delete)
   (mu4e-index-cleanup t)
   (mu4e-index-lazy-check nil)
-  (mu4e-use-fancy-chars (display-graphic-p))
+  (mu4e-use-fancy-chars nil)
   (mu4e-confirm-quit nil)
   (mu4e-eldoc-support t)
   (mu4e-change-filenames-when-moving t)

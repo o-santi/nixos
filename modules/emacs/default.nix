@@ -47,7 +47,7 @@ in with lib; {
       emacs
     ] ++ outside-emacs;
     fonts.packages = with pkgs; [
-      nerd-fonts.iosevka
+      nerd-fonts.dejavu-sans-mono
     ];
   };
 }
