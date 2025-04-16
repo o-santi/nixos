@@ -320,6 +320,7 @@ Try to use the package.
   :hook (org-mode . org-indent-mode)
   :diminish org-indent-mode
   :config
+  (setopt text-mode-ispell-word-completion nil)
   (add-to-list 'org-src-lang-modes '("rust" . rust-ts))
   (add-to-list 'org-src-lang-modes '("python" . python-ts))
   (custom-set-faces

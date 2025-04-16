@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ...}: with lib; {
+{ config, lib, pkgs, inputs, ...}: with lib; {
   options.santi-modules.basic.enable = mkOption {
     type = types.bool;
     default = true;
@@ -6,6 +6,10 @@
   };
   config = mkIf config.santi-modules.basic.enable {
     nix = {
+      registry.nixpkgs.to = {
+        type = "path";
+        path = inputs.nixpkgs;
+      };
       package = pkgs.lib.mkForce pkgs.nixVersions.nix_2_25;
       settings = {
         trusted-users = [ "root" "leonardo" ];
