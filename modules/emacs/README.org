@@ -49,7 +49,7 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 (add-hook 'after-make-frame-functions
           (lambda (frame)
             (select-frame frame)
-            (set-frame-font "DejaVuSansM Nerd Font 12" nil t)))
+            (set-frame-font "DejaVuSansM Nerd Font 13" nil t)))
 #+end_src
 
 ** Backups
