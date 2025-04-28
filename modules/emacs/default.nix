@@ -7,14 +7,6 @@ let
     emacs-lsp-booster
     delta
   ];
-  # org-tangle-elisp-blocks = (pkgs.callPackage ./org.nix { inherit (inputs) from-elisp; }).org-tangle ({ language, flags } : let
-  #   is-elisp = (language == "emacs-lisp") || (language == "elisp");
-  #   is-tangle = if flags ? ":tangle" then
-  #     flags.":tangle" == "yes" || flags.":tangle" == "y" else false;
-  # in
-  #   is-elisp && is-tangle
-  # );
-  # config-el = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./README.org));
   emacs = pkgs.emacsWithPackagesFromUsePackage {
     package = pkgs.emacs-unstable.override {
       withGTK3 = true;
