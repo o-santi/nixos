@@ -10,7 +10,7 @@
         type = "path";
         path = inputs.nixpkgs;
       };
-      package = pkgs.lib.mkForce pkgs.nixVersions.nix_2_25;
+      package = pkgs.lib.mkForce pkgs.nixVersions.nix_2_28;
       settings = {
         trusted-users = [ "root" "leonardo" ];
         auto-optimise-store = true;

@@ -72,7 +72,7 @@ in {
           file.".ssh/id_ed25519.pub".source = ../secrets/user-ssh-key.pub;
           # file.".mozilla/firefox/leonardo/chrome/firefox-gnome-theme" =  mkIf cfg.firefox.enable { source = inputs.firefox-gnome-theme; };
           packages = lib.optionals cfg.desktop-environment.enable (with pkgs; [
-            vesktop
+            legcord
             slack
             whatsapp-for-linux
             telegram-desktop
