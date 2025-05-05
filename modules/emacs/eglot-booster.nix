@@ -1,5 +1,5 @@
 { trivialBuild,
-  fetchFromGitHub,
+  fetchFromGitHub
 }:
 trivialBuild {
   pname = "eglot-booster";

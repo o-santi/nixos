@@ -21,7 +21,7 @@
   outputs = { self, nixpkgs, deploy-rs, ... } @ inputs : let
     inherit (builtins) readDir attrNames listToAttrs split head;
     pkgs = import nixpkgs {
-      overlays = [ (inputs.emacs-overlay.overlays.default) ];
+      overlays = [ inputs.emacs-overlay.overlays.default ];
       system = "x86_64-linux";
     };
     modules = map (p: ./modules/${p}) (attrNames (readDir ./modules));

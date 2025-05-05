@@ -7,24 +7,26 @@ This makes it such that it is trivial to handle complex configurations, such as 
 
 In order to run this emacs configuration locally, all you need to do is run the following command:
 #+begin_src shell
-nix run github:o-santi/emacs --experimental-features "nix-command" --experimental-features "flakes"
+nix run github:o-santi/nixos#emacs --experimental-features "nix-command" --experimental-features "flakes"
 #+end_src
 Though you probably shouldn't, because it will most likely build all of emacs from scratch (which takes a little while).
 
-You can also use it as a ~nixosModule~, in order to add additional packages like fonts.
-
 * Core
 ** Remove bar mode
+
+Disables menu mode, tool bar mode and scroll bar mode, leaving a bare bones emacs. Also sets up some relevant stats in the buffer, like column number mode, line number mode and ~indicate-empty-lines~. I like ~window-combination-resize~ too, so I enable that.
+
 #+begin_src emacs-lisp :tangle yes
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(scroll-bar-mode -1)
+(set-scroll-bar-mode nil)
 
 (setq gc-cons-threshold 100000000)
 
 (global-display-line-numbers-mode +1)
 (line-number-mode +1)
 (column-number-mode +1)
+
 (setq default-frame-alist '((fullscreen . maximized)))
 (setq use-short-answers t)
 (setq inhibit-startup-message t)
@@ -37,7 +39,10 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 (setq window-combination-resize t)
 #+end_src
 
-** Theme and font
+** Themes and font
+
+I'm currently testing both ~modus-themes~ and ~ef-themes~, and I love DejaVu Sans Mono.
+
 #+begin_src emacs-lisp :tangle yes
 (use-package modus-themes
   :ensure t)
@@ -53,6 +58,9 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 #+end_src
 
 ** Backups
+
+This avoids emacs from saving backup files in the current directory, by instead putting them in the =~/.saves= directory.
+
 #+begin_src emacs-lisp :tangle yes
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -65,9 +73,18 @@ You can also use it as a ~nixosModule~, in order to add additional packages like
 
 * Utility
 ** Diminish minor modes
+
+I like having a relatively clean 
+
 #+begin_src emacs-lisp :tangle yes
 (use-package diminish
   :ensure t)
+(use-package autorevert
+  :diminish auto-revert-mode)
+(use-package flymake
+  :diminish)
+(use-package eldoc
+  :diminish)
 #+end_src
 ** Searching
 #+begin_src emacs-lisp :tangle yes
@@ -105,7 +122,7 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   :ensure t
   :after nerd-icons
   :after marginalia
-  :hook (marginalia-mode . nerd-icons-completion-marginal)
+  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup)
   :config
   (nerd-icons-completion-mode))
 
@@ -131,6 +148,7 @@ Configurations for magit
   :custom (magit-process-finish-apply-ansi-colors t))
 (use-package magit-delta
   :ensure t
+  :diminish
   :hook (magit-mode . magit-delta-mode))
 #+end_src
 
@@ -165,29 +183,29 @@ Pretty minibuffer support
 #+end_src
 ** Projects
 #+begin_src emacs-lisp :tangle yes
-  (defcustom project-root-markers
-    '("Cargo.toml" "flake.nix" ".git")
-    "Files that indicate that directory is the root of a project"
-    :type '(repeat string)
-    :group 'project)
+(defcustom project-root-markers
+  '("Cargo.toml" "flake.nix" ".git")
+  "Files that indicate that directory is the root of a project"
+  :type '(repeat string)
+  :group 'project)
 
-  (defun project-root-p (path)
+(defun project-root-p (path)
+  (catch 'found
+    (dolist (marker project-root-markers)
+      (when (file-exists-p (concat path marker))
+        (throw 'found marker)))))
+
+(defun project-find-root (path)
+  "Search up the PATH for `project-root-markers'."
+  (let ((path (expand-file-name path)))
     (catch 'found
-      (dolist (marker project-root-markers)
-        (when (file-exists-p (concat path marker))
-          (throw 'found marker)))))
+      (while (not (equal "/" path))
+        (if (not (project-root-p path))
+            (setq path (file-name-directory (directory-file-name path)))
+          (throw 'found (cons 'transient path)))))))
 
-  (defun project-find-root (path)
-    "Search up the PATH for `project-root-markers'."
-    (let ((path (expand-file-name path)))
-      (catch 'found
-        (while (not (equal "/" path))
-          (if (not (project-root-p path))
-              (setq path (file-name-directory (directory-file-name path)))
-            (throw 'found (cons 'transient path)))))))
-
-  (use-package project
-    :config (setq project-find-functions '(project-find-root)))
+(use-package project
+  :config (setq project-find-functions '(project-find-root)))
 #+end_src
 ** Helpful and which key
 Better help defaults
@@ -215,15 +233,15 @@ Language server support. Already comes installed but used to configure additiona
 #+begin_src emacs-lisp :tangle yes
 (use-package eglot
   :ensure nil
+  :diminish eglot
   :bind (("C-c a" . eglot-code-actions)
-         ("C-c r" . eglot-rename)
-         )
+         ("C-c r" . eglot-rename))
   :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 
-(use-package eglot-booster
-  :after eglot
-  :ensure t
-  :config (eglot-booster-mode))
+;; (use-package eglot-booster
+;;   :after eglot
+;;   :ensure t
+;;   :config (eglot-booster-mode))
 #+end_src
 
 ** Corfu
@@ -316,7 +334,6 @@ Try to use the package.
 ** Org mode
 #+begin_src emacs-lisp :tangle yes
 (use-package org
-  :ensure nil
   :hook (org-mode . org-indent-mode)
   :diminish org-indent-mode
   :config
@@ -355,8 +372,6 @@ Try to use the package.
  org-agenda-skip-scheduled-if-done t
  org-agenda-skip-timestamp-if-done t
  org-agenda-format-date "%e de %B, %A"
- org-agenda-deadline-leaders  '("Deadline:  " "Daqui a %d dias:" "%d dias atrás")
- org-agenda-scheduled-leaders '("Agendado:  " "%d dias atrasado:")
  )
 
 (setq
