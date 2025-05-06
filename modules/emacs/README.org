@@ -27,7 +27,7 @@ Disables menu mode, tool bar mode and scroll bar mode, leaving a bare bones emac
 (line-number-mode +1)
 (column-number-mode +1)
 
-(setq default-frame-alist '((fullscreen . maximized)))
+(setq default-frame-alist '((fullscreen . maximized) (vertical-scroll-bars . nil)))
 (setq use-short-answers t)
 (setq inhibit-startup-message t)
 (setq-default indicate-empty-lines t)
