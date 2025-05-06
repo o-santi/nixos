@@ -8,11 +8,11 @@ in {
       description = "Enables default user configuration and ssh access";
     };
   };
-  config = mkIf config.santi-modules.default-user.enable {
+  config = mkIf cfg.default-user.enable {
     environment.systemPackages = with pkgs; [
       deploy-rs
       jujutsu
-    ] ++ (if cfg.mu.enable then [ pkgs.parallel ] else []);
+    ];
     users.mutableUsers = false;
     users.users.leonardo = {
       isNormalUser = true;

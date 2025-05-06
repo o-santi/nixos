@@ -3,6 +3,9 @@
 in {
   options.santi-modules.mu.enable = mkEnableOption "Enables mu, mbsync and msmtp";
   config = mkIf cfg.mu.enable {
+    environment.systemPackages = [
+      pkgs.parallel
+    ];
     home-manager.users.leonardo = {
       programs = {
         mu.enable = true;
