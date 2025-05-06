@@ -1,4 +1,7 @@
 { config, lib, pkgs, ...}: with lib; {
+  imports = [
+    ./gnome-config.nix
+  ];
   options.santi-modules.gnome.enable = mkEnableOption "Enable gnome";
   config = mkIf config.santi-modules.gnome.enable {
     programs.dconf.enable = true;

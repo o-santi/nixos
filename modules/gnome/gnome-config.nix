@@ -1,6 +1,5 @@
-santi-modules: 
-{ lib, ... }: lib.optionalAttrs santi-modules.gnome.enable {
-  dconf.settings = {
+{ config, lib, ... }: lib.mkIf config.santi-modules.gnome.enable {
+  home-manager.users.leonardo.dconf.settings = {
     "org/gnome/desktop/background" = {
       picture-uri = "${../../wallpaper.png}";
       picture-uri-dark = "${../../wallpaper.png}";

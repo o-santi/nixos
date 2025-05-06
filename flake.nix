@@ -13,7 +13,11 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank";
     deploy-rs.url = "github:serokell/deploy-rs";
   };
@@ -24,13 +28,13 @@
       overlays = [ inputs.emacs-overlay.overlays.default ];
       system = "x86_64-linux";
     };
-    modules = map (p: ./modules/${p}) (attrNames (readDir ./modules));
+    mods = map (p: ./modules/${p}) (attrNames (readDir ./modules));
     make-config-named = host: nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/${host}.nix
         inputs.home-manager.nixosModules.default
-      ] ++ modules;
+      ] ++ mods;
     };
     get-basename = n: head (split "\\." n);
     hosts-names = map get-basename (attrNames (readDir ./hosts));

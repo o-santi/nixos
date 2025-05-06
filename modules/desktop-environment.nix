@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: with lib; {
+{ config, lib, ... }: with lib; {
   options.santi-modules.desktop-environment.enable = mkEnableOption "Enable default desktop-environment";
   config = mkIf config.santi-modules.desktop-environment.enable {
     santi-modules = {
@@ -9,6 +9,7 @@
       mu.enable = true;
       default-user.enable = true;
       basic.enable = true;
+      zen-browser.enable = true;
     };
 
     services.printing.enable = false; # disabled until CUPS CVE is fixed
