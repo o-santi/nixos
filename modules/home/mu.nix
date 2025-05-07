@@ -1,4 +1,4 @@
-{ config, lib, ...}: with lib; let
+{ config, lib, pkgs, ...}: with lib; let
   cfg = config.santi-modules;
 in {
   options.santi-modules.mu.enable = mkEnableOption "Enables mu, mbsync and msmtp";
