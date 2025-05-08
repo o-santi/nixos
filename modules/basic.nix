@@ -1,10 +1,18 @@
 { config, lib, pkgs, inputs, ...}: with lib; {
-  options.santi-modules.basic.enable = mkOption {
-    type = types.bool;
-    default = true;
-    description = "Enables basic configuration on nix, nixpkgs and bash prompt.";
+  options.santi-modules = {
+    basic.enable = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enables basic configuration on nix, nixpkgs and bash prompt.";
+    };
+    has-touchpad = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether a given device has support for touchpad";
+    };
   };
   config = mkIf config.santi-modules.basic.enable {
+    documentation.nixos.enable = false;
     nix = {
       registry.nixpkgs.to = {
         type = "path";

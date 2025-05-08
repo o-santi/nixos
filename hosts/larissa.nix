@@ -9,7 +9,10 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  santi-modules.desktop-environment.enable = true;
+  santi-modules = {
+    desktop-environment.enable = true;
+    has-touchpad = true;
+  };
   # Bootloader.
   boot = {
     loader.systemd-boot.enable = true;
