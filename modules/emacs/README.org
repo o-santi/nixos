@@ -151,6 +151,9 @@ Configurations for magit
   :ensure t
   :diminish
   :hook (magit-mode . magit-delta-mode))
+(use-package eldoc-diffstat
+  :ensure t
+  :config (global-eldoc-diffstat-mode))
 #+end_src
 
 *** Forge

@@ -20,6 +20,7 @@ in
       callPackage = pkgs.lib.callPackageWith (pkgs // epkgs);
     in epkgs // {
       eglot-booster = callPackage ./eglot-booster.nix {};
+      eldoc-diffstat = callPackage ./eldoc-diffstat.nix {};
     };
     config = ./README.org;
     alwaysTangle = true;
