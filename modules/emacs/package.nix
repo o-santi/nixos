@@ -28,6 +28,7 @@ in
       (epkgs.treesit-grammars.with-grammars (g: with g; [
         tree-sitter-rust
         tree-sitter-python
+        tree-sitter-nix
       ]))
     ] ++ outside-emacs;
   }

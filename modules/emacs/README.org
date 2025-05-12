@@ -301,9 +301,14 @@ It also relies on python lsp server with builtin ruff support.
 
 ** Nix
 #+begin_src emacs-lisp :tangle yes
-(use-package nix-mode
-  :ensure t
-  :hook (nix-mode . eglot-ensure))
+(use-package nix-ts-mode
+  :mode "\\.nix\\'"
+  :hook (nix-ts-mode . eglot-ensure)
+  :ensure t)
+;; (add-hook 'nix-ts-mode-hook #'eglot-ensure)
+;; (use-package nix-mode
+;;   :ensure t
+;;   :hook (nix-mode . eglot-ensure))
 #+end_src
 ** Rust
 Try to use the package.
