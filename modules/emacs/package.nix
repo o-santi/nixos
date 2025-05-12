@@ -24,6 +24,7 @@ in
     };
     config = ./README.org;
     alwaysTangle = true;
+    alwaysEnsure = true;
     defaultInitFile = true;
     extraEmacsPackages = epkgs: [
       (epkgs.treesit-grammars.with-grammars (g: with g; [

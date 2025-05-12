@@ -44,10 +44,8 @@ Disables menu mode, tool bar mode and scroll bar mode, leaving a bare bones emac
 I'm currently testing both ~modus-themes~ and ~ef-themes~, and I love DejaVu Sans Mono.
 
 #+begin_src emacs-lisp :tangle yes
-(use-package modus-themes
-  :ensure t)
-(use-package ef-themes
-  :ensure t)
+(use-package modus-themes)
+(use-package ef-themes)
 ;; (use-package kanagawa-theme)
 (load-theme 'ef-melissa-dark t)
 
@@ -77,8 +75,7 @@ This avoids emacs from saving backup files in the current directory, by instead 
 I like having a relatively clean 
 
 #+begin_src emacs-lisp :tangle yes
-(use-package diminish
-  :ensure t)
+(use-package diminish)
 (use-package autorevert
   :diminish auto-revert-mode)
 (use-package flymake
@@ -88,17 +85,14 @@ I like having a relatively clean
 #+end_src
 ** Searching
 #+begin_src emacs-lisp :tangle yes
-(use-package rg
-  :ensure t)
+(use-package rg)
 (use-package ctrlf
-  :ensure t
   :config (ctrlf-mode +1))
 #+end_src
 ** Age encryption
 Configuration to automagically open age files, and to encrypt them correctly to all my machines.
 #+begin_src emacs-lisp :tangle yes
 (use-package age
-  :ensure t
   :demand t
   :custom
   (age-program "rage")
@@ -114,12 +108,10 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 ** Nerd icons
 #+begin_src emacs-lisp :tangle yes
 (use-package nerd-icons
-  :ensure t
   :custom
   (nerd-icons-font-family "DejaVuSansM Nerd Font"))
 
 (use-package nerd-icons-completion
-  :ensure t
   :after nerd-icons
   :after marginalia
   :hook (marginalia-mode . nerd-icons-completion-marginalia-setup)
@@ -127,7 +119,7 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   (nerd-icons-completion-mode))
 
 (use-package nerd-icons-dired
-  :ensure t
+  
   :hook (dired-mode . nerd-icons-dired-mode)
   :diminish nerd-icons-dired
   :custom (dired-listing-switches "-alh"))
@@ -137,7 +129,6 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 To integrate with nix shells.
 #+begin_src emacs-lisp :tangle yes
 (use-package envrc
-  :ensure t
   :config (envrc-global-mode))
 #+end_src
 ** Magit
@@ -145,14 +136,11 @@ Configurations for magit
 *** Use Magit
 #+begin_src emacs-lisp :tangle yes
 (use-package magit
-  :ensure t
   :custom (magit-process-finish-apply-ansi-colors t))
 (use-package magit-delta
-  :ensure t
   :diminish
   :hook (magit-mode . magit-delta-mode))
 (use-package eldoc-diffstat
-  :ensure t
   :config (global-eldoc-diffstat-mode))
 #+end_src
 
@@ -163,7 +151,6 @@ Configurations for magit
 To interact with gitlab and github.
 #+begin_src emacs-lisp :tangle yes
 (use-package forge
-  :ensure t
   :after magit)
 #+end_src
 
@@ -171,18 +158,15 @@ To interact with gitlab and github.
 Pretty minibuffer support
 #+begin_src emacs-lisp :tangle yes
 (use-package vertico
-  :ensure t
   :config (vertico-mode))
 
 (use-package orderless
-  :ensure t
   :custom
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package marginalia
-  :ensure t
   :config (marginalia-mode))
 #+end_src
 ** Projects
@@ -215,7 +199,6 @@ Pretty minibuffer support
 Better help defaults
 #+begin_src emacs-lisp :tangle yes
 (use-package helpful
-  :ensure t
   :config
   (global-set-key (kbd "C-h f") #'helpful-callable)
   (global-set-key (kbd "C-h v") #'helpful-variable)
@@ -223,14 +206,12 @@ Better help defaults
   (global-set-key (kbd "C-h k") #'helpful-key))
 
 (use-package which-key
-  :ensure t
   :dimish which-key-mode
   :config (which-key-mode))
 #+end_src
 ** Bind key
 #+begin_src emacs-lisp :tangle yes
-(use-package bind-key
-  :ensure t)
+(use-package bind-key)
 #+end_src
 ** Eglot
 Language server support. Already comes installed but used to configure additional language servers.
@@ -244,7 +225,7 @@ Language server support. Already comes installed but used to configure additiona
 
 ;; (use-package eglot-booster
 ;;   :after eglot
-;;   :ensure t
+;;   
 ;;   :config (eglot-booster-mode))
 #+end_src
 
@@ -252,7 +233,6 @@ Language server support. Already comes installed but used to configure additiona
 Completion popup system
 #+begin_src emacs-lisp :tangle yes
 (use-package corfu
-  :ensure t
   :config (global-corfu-mode)
   :custom
   (corfu-auto t)
@@ -262,8 +242,7 @@ Completion popup system
 #+end_src
 ** Vterm
 #+begin_src emacs-lisp :tangle yes
-(use-package vterm
-  :ensure t)
+(use-package vterm)
 #+end_src
 ** Compilation
 Add support for ansi escape codes in compilation
@@ -276,7 +255,6 @@ Add support for ansi escape codes in compilation
 ** Pdf reader
 #+begin_src emacs-lisp :tangle yes
 (use-package pdf-tools
-  :ensure t
   :defer t
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :magic ("%PDF" . pdf-view-mode))
@@ -285,7 +263,6 @@ Add support for ansi escape codes in compilation
 Minor mode to allow opening files in chunks
 #+begin_src emacs-lisp :tangle yes
 (use-package vlf
-  :ensure t
   :config
   (require 'vlf-setup)
   (custom-set-variables
@@ -306,11 +283,10 @@ It also relies on python lsp server with builtin ruff support.
 #+begin_src emacs-lisp :tangle yes
 (use-package nix-ts-mode
   :mode "\\.nix\\'"
-  :hook (nix-ts-mode . eglot-ensure)
-  :ensure t)
+  :hook (nix-ts-mode . eglot-ensure))
 ;; (add-hook 'nix-ts-mode-hook #'eglot-ensure)
 ;; (use-package nix-mode
-;;   :ensure t
+;;   
 ;;   :hook (nix-mode . eglot-ensure))
 #+end_src
 ** Rust
@@ -325,18 +301,15 @@ Try to use the package.
 ** Markdown
 #+begin_src emacs-lisp :tangle yes
 (use-package markdown-mode
-  :ensure t
   :mode "\\.md\\'")
 #+end_src
 ** Coq
 #+begin_src emacs-lisp :tangle yes
 (use-package proof-general
-  :ensure t
   :custom
   (proof-splash-enable nil))
 
 (use-package company-coq
-  :ensure t
   :hook (coq-mode . company-coq-mode))
 #+end_src
 * Personal
@@ -395,7 +368,6 @@ Try to use the package.
 *** Org alert
 #+begin_src emacs-lisp :tangle yes
 (use-package org-alert
-  :ensure t
   :config (org-alert-enable)
   :custom
   (org-alert-interval 60)
@@ -407,7 +379,6 @@ Try to use the package.
 In order to publish files to hugo from org.
 #+begin_src emacs-lisp :tangle yes
 (use-package ox-hugo
-  :ensure t
   :after ox)
 #+end_src
 
@@ -431,7 +402,6 @@ Helper functions, to try to discover which mail pertains to which account.
 Actual mu4e definition
 #+begin_src emacs-lisp :tangle yes
 (use-package mu4e
-  :ensure t
   :bind ("C-c m" . mu4e)
   :config
   :custom
