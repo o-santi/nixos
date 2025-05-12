@@ -129,6 +129,7 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 (use-package nerd-icons-dired
   :ensure t
   :hook (dired-mode . nerd-icons-dired-mode)
+  :diminish nerd-icons-dired
   :custom (dired-listing-switches "-alh"))
 
 #+end_src

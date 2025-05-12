@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... } : let
-  inherit (builtins) attrNames attrValues;
+  inherit (builtins) attrNames attrValues filter;
   cfg = config.santi-modules.gnome;
   enabled-extensions = lib.filterAttrs (key: conf: conf.enabled) cfg.extensions;
 in {
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       gnome-tweaks
-      tela-icon-theme
-      hackneyed
+      tela-icon-theme # gtk theme
+      hackneyed       # mouse icons
     ] ++ map (pkg-name: pkgs.gnomeExtensions.${pkg-name})
       (attrNames enabled-extensions);
     santi-modules.gnome.extensions = {
@@ -26,7 +26,8 @@ in {
     };
     home-manager.users.leonardo.dconf.settings = lib.mkMerge ([{
       "org/gnome/shell" = {
-        enabled-extensions = map (pkg: pkg.email) (attrValues enabled-extensions);
+        enabled-extensions = filter (e: !(isNull e))
+          (map (pkg: pkg.email) (attrValues enabled-extensions));
       };
     }] ++ (map (pkg: pkg.dconf-settings) (attrValues enabled-extensions)));
   };

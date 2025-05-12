@@ -13,7 +13,8 @@
             description = "Extension package";
           };
           email = mkOption {
-            type = str;
+            type = nullOr str;
+            default = null;
             description = "Extensions' maintainer email";
           };
           dconf-settings = mkOption {
