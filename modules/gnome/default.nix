@@ -32,6 +32,7 @@
   config = mkIf config.santi-modules.gnome.enable {
     programs.dconf.enable = true;
     environment.gnome.excludePackages = with pkgs; [
+      decibels
       gnome-font-viewer
       gnome-connections
       simple-scan

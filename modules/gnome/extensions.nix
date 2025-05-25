@@ -23,6 +23,13 @@ in {
         email = "system-monitor@gnome-shell-extensions.gcampax.github.com";
         enabled = true;
       };
+      rounded-window-corners-reborn = {
+        enabled = true;
+      };
+      unite = {
+        email = "unite@hardpixel.eu";
+        enabled = true;
+      };
     };
     home-manager.users.leonardo.dconf.settings = lib.mkMerge ([{
       "org/gnome/shell" = {
