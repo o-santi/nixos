@@ -25,6 +25,7 @@ in {
       };
       rounded-window-corners-reborn = {
         enabled = true;
+        email = "rounded-window-corners@fxgn";
       };
       unite = {
         email = "unite@hardpixel.eu";
