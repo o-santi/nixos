@@ -69,6 +69,8 @@
       gnome-keyring.enable = true;
     };
     security.pam.services = {
+      login.enableGnomeKeyring = true;
+      gdm.enableGnomeKeyring = true;
       gdm-autologin.enableGnomeKeyring = true;
       gdm-fingerprint.enableGnomeKeyring = true;
       gdm-password.enableGnomeKeyring = true;
