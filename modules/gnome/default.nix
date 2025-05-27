@@ -68,6 +68,12 @@
       gnome-browser-connector.enable = true;
       gnome-keyring.enable = true;
     };
+    security.pam.services = {
+      gdm-autologin.enableGnomeKeyring = true;
+      gdm-fingerprint.enableGnomeKeyring = true;
+      gdm-password.enableGnomeKeyring = true;
+    };
+    
     home-manager.users.leonardo.dconf.settings = {
       "org/gnome/desktop/background" = {
         picture-uri = "${../../wallpaper.png}";
