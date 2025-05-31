@@ -55,14 +55,12 @@
       hitori # sudoku game
       atomix # puzzle game
     ];
-    services.xserver = {
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
-      };
-      desktopManager.gnome.enable = true;
-      excludePackages = [ pkgs.xterm ];
+    services.displayManager.gdm = {
+      enable = true;
+      wayland = true;
     };
+    services.desktopManager.gnome.enable = true;
+    services.xserver.excludePackages = [ pkgs.xterm ];
     services.udev.packages = [ pkgs.gnome-settings-daemon ];
     services.gnome = {
       gnome-browser-connector.enable = true;

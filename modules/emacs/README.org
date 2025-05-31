@@ -120,7 +120,6 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   (nerd-icons-completion-mode))
 
 (use-package nerd-icons-dired
-  
   :hook (dired-mode . nerd-icons-dired-mode)
   :diminish nerd-icons-dired
   :custom (dired-listing-switches "-alh"))
@@ -130,7 +129,11 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 To integrate with nix shells.
 #+begin_src emacs-lisp :tangle yes
 (use-package envrc
-  :config (envrc-global-mode))
+  :config
+  (envrc-global-mode)
+  ;; HACK: add emacs' `exec-path` back to `PATH` in order to keep
+  ;; envrc from deleting special entries added into emacs' `exec-path` on reload
+  (setenv "PATH" (mapconcat 'identity (cons (getenv "PATH") exec-path) ":")))
 #+end_src
 ** Magit
 Configurations for magit
