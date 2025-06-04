@@ -38,7 +38,7 @@ in {
           git = {
             enable = true;
             lfs.enable = true;
-            diff-so-fancy.enable = true;
+            difftastic.enable = true;
             extraConfig = {
               user = {
                 name = "Leonardo Santiago";
@@ -48,7 +48,14 @@ in {
               color.ui = true;
               gpg.format = "ssh";
               commit.gpgsign = true;
+              "merge \"mergigraf\"" = {
+                name = "mergigraf";
+                driver = "${pkgs.mergiraf}/bin/mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+              };
             };
+            attributes = [
+              "* merge=mergigraf"
+            ];
           };
         };
       };
