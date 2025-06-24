@@ -31,6 +31,7 @@ in
         tree-sitter-rust
         tree-sitter-python
         tree-sitter-nix
+        tree-sitter-haskell
       ]))
     ] ++ outside-emacs;
   }

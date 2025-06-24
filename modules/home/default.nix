@@ -5,6 +5,7 @@ in {
     inputs.home-manager.nixosModules.home-manager
     ./mu.nix
     ./zen.nix
+    ./nushell.nix
   ];
   config = mkIf cfg.default-user.enable {
     home-manager = {
@@ -13,6 +14,7 @@ in {
       useUserPackages = true;
       users.leonardo = {
         home = {
+          shell.enableNushellIntegration = true;
           stateVersion = "23.05";
           homeDirectory = "/home/leonardo";
           packages = lib.optionals cfg.desktop-environment.enable (with pkgs; [
@@ -23,17 +25,9 @@ in {
           ]);
         };
         programs = {
-          bash = {
+          direnv = {
             enable = true;
-            enableCompletion = true;
-            initExtra = ''
-              shopt -s -q autocd
-              shopt -s no_empty_cmd_completion
-            '';
-          };
-          fzf = {
-            enable = true;
-            enableBashIntegration = true;
+            nix-direnv.enable = true;
           };
           git = {
             enable = true;

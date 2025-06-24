@@ -18,7 +18,6 @@
       inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mixrank.url = "git+ssh://git@gitlab.com/mixrank/mixrank";
     deploy-rs.url = "github:serokell/deploy-rs";
   };
 

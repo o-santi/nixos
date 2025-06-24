@@ -246,7 +246,8 @@ Completion popup system
 #+end_src
 ** Vterm
 #+begin_src emacs-lisp :tangle yes
-(use-package vterm)
+(use-package vterm
+  :custom (vterm-shell "/run/current-system/sw/bin/nu"))
 #+end_src
 ** Compilation
 Add support for ansi escape codes in compilation
@@ -308,6 +309,17 @@ Try to use the package.
 (use-package markdown-mode
   :mode "\\.md\\'")
 #+end_src
+
+** OCaml
+#+begin_src emacs-lisp :tangle yes
+(use-package tuareg)
+#+end_src
+
+** Haskell
+#+begin_src emacs-lisp :tangle yes
+(use-package haskell-ts-mode)
+#+end_src
+
 ** Coq
 #+begin_src emacs-lisp :tangle yes
 (use-package proof-general

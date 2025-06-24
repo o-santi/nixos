@@ -2,9 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, modulesPath, inputs, ... }: {
+{ config, pkgs, lib, modulesPath, ... }: {
   imports = [
-    inputs.mixrank.nixosModules.dev-machine
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
   santi-modules.desktop-environment.enable = true;
@@ -12,6 +11,7 @@
   # Bootloader.
   boot = {
     loader = {
+      timeout = 0;
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };

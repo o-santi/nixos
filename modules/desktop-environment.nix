@@ -10,6 +10,7 @@
       default-user.enable = true;
       basic.enable = true;
       zen-browser.enable = true;
+      nushell.enable = true;
     };
 
     services.printing.enable = false; # disabled until CUPS CVE is fixed

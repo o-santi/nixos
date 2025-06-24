@@ -18,7 +18,6 @@ in {
       isNormalUser = true;
       description = "leonardo";
       extraGroups = [ "networkmanager" "wheel" ];
-      shell = pkgs.bashInteractive;
     };
     programs.ssh.startAgent = true;
     services.openssh = {

@@ -4,7 +4,6 @@
 
 { config, pkgs, lib, inputs, modulesPath,  ... }: {
   imports = [
-    inputs.mixrank.nixosModules.dev-machine
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
