@@ -11,58 +11,43 @@ in {
         mu.enable = true;
         msmtp.enable = true;
         mbsync.enable = true;
+        offlineimap.enable = true;
       };
       services.mbsync = {
         enable = true;
         frequency = "*:0/5";
       };
-      accounts.email.accounts = {
-        personal = {
-          address = "leonardo.ribeiro.santiago@gmail.com";
-          userName = "leonardo.ribeiro.santiago@gmail.com";
+      accounts.email.accounts = let
+        gmailAccount = { email, secret, primary ? false } : {
+          inherit primary;
+          address = email;
+          userName = email;
+          realName = "Leonardo Ribeiro Santiago";
           imap.host = "imap.gmail.com";
           smtp.host = "smtp.gmail.com";
+          msmtp.enable = true;
+          mu.enable = true;
+          mbsync = {
+            enable = true;
+            create = "both";
+            expunge = "both";
+          };
+          passwordCommand = "cat ${secret.path}";
+        };
+      in with config.age.secrets; {
+        personal = gmailAccount {
+          email = "leonardo.ribeiro.santiago@gmail.com";
+          secret = personal-mail;
           primary = true;
-          realName = "Leonardo Ribeiro Santiago";
-          mbsync = {
-            enable = true;
-            create = "both";
-            expunge = "both";
-          };
-          msmtp.enable = true;
-          mu.enable = true;
-          passwordCommand = "cat ${config.age.secrets.personal-mail.path}";
         };
-        university = {
-          address = "leonardors@dcc.ufrj.br";
-          userName = "leonardors@dcc.ufrj.br";
-          imap.host = "imap.gmail.com";
-          smtp.host = "smtp.gmail.com";
-          realName = "Leonardo Ribeiro Santiago";
-          mbsync = {
-            enable = true;
-            create = "both";
-            expunge = "both";
-          };
-          msmtp.enable = true;
-          mu.enable = true;
-          passwordCommand = "cat ${config.age.secrets.university-mail.path}";
+        university = gmailAccount {
+          email = "leonardors@dcc.ufrj.br";
+          secret = university-mail;
         };
-        work = {
-          address = "leonardo@mixrank.com";
-          userName = "leonardo@mixrank.com";
-          imap.host = "imap.gmail.com";
-          smtp.host = "smtp.gmail.com";
-          realName = "Leonardo Ribeiro Santiago";
-          mbsync = {
-            enable = true;
-            create = "both";
-            expunge = "both";
-          };
-          msmtp.enable = true;
-          mu.enable = true;
-          passwordCommand = "cat ${config.age.secrets.work-mail.path}";
-        };
+        # supabase = gmailAccount {
+        #   email = "leonardo.santiago@supabase.io";
+        #   secret = supabase-mail;
+        # };
       };
     };
   };
