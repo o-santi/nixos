@@ -304,6 +304,13 @@ Try to use the package.
 (setq rust-ts-mode-indent-offset 2)
 #+end_src
 
+** YAML
+#+begin_src emacs-lisp :tangle yes
+(use-package yaml-mode
+  :mode "\\.yaml\\'"
+  :mode "\\.yml\\'")
+#+end_src
+
 ** Markdown
 #+begin_src emacs-lisp :tangle yes
 (use-package markdown-mode

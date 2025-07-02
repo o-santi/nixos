@@ -34,6 +34,7 @@ in {
             lfs.enable = true;
             difftastic.enable = true;
             extraConfig = {
+              github.user = "o-santi";
               user = {
                 name = "Leonardo Santiago";
                 email = "leonardo.ribeiro.santiago@gmail.com";
