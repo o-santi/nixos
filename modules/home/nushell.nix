@@ -30,8 +30,11 @@ in {
                   $"\e]($arg)\e\\"
                 }
               }
+              def get-pwd-repr [] {
+                "~" | path join (pwd | path relative-to $env.HOME)
+              }
               def create_left_prompt [] {
-                ${pkgs.starship}/bin/starship prompt --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)'
+                $"[(hostname)] (get-pwd-repr) "
               }
               # Output text prompt that vterm can use to track current directory
               export def left-prompt-track-cwd [] {
@@ -41,7 +44,7 @@ in {
             use vprompt
             $env.PROMPT_COMMAND = {|| vprompt left-prompt-track-cwd }
             $env.PROMPT_COMMAND_RIGHT = ""
-            $env.PROMPT_INDICATOR = ""
+            $env.PROMPT_INDICATOR = ":: "
           '';
         };
       };
