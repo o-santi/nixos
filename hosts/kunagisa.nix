@@ -32,6 +32,8 @@
     useDHCP = lib.mkDefault true;
   };
 
+  virtualisation.docker.enable = true;
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   
   fileSystems = {
