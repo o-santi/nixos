@@ -220,12 +220,12 @@ Better help defaults
 ** Eglot
 Language server support. Already comes installed but used to configure additional language servers.
 #+begin_src emacs-lisp :tangle yes
-(use-package eglot
-  :ensure nil
-  :diminish eglot
-  :bind (("C-c a" . eglot-code-actions)
-         ("C-c r" . eglot-rename))
-  :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
+;; (use-package eglot
+;;   :ensure nil
+;;   :diminish eglot
+;;   :bind (("C-c a" . eglot-code-actions)
+;;          ("C-c r" . eglot-rename))
+;;   :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 
 ;; (use-package eglot-booster
 ;;   :after eglot
@@ -233,16 +233,36 @@ Language server support. Already comes installed but used to configure additiona
 ;;   :config (eglot-booster-mode))
 #+end_src
 
-** Corfu
-Completion popup system
+** LSP bridge
+eglot does not seem to like basedpyright, so I'd like to try lsp bridge and see if it works instead.
 #+begin_src emacs-lisp :tangle yes
-(use-package corfu
-  :config (global-corfu-mode)
+(use-package lsp-bridge
+  :init (global-lsp-bridge-mode)
+  :diminish lsp-bridge
+  :bind (("M-." . lsp-bridge-find-def)
+         ("M-," . lsp-bridge-find-def-return)
+         ("M-?" . lsp-bridge-find-references)
+         ("C-c a" . lsp-bridge-code-action)
+         ("C-c r" . lsp-bridge-rename))
   :custom
-  (corfu-auto t)
-  (corfu-cycle t)
-  (corfu-separator ?\s)
-  (corfu-quit-no-match t))
+  (lsp-bridge-enable-inlay-hint t)
+  (lsp-bridge-enable-hover-diagnostic t)
+  (lsp-bridge-python-multi-lsp-server 'basedpyright_ruff)
+  (lsp-bridge-python-lsp-server 'basedpyright)
+  (lsp-bridge-nix-lsp-server 'nil))
+#+end_src
+
+
+** Corfu
+Completion popup system. DISABLED for acm, which is the default from lsp-bridge. 
+#+begin_src emacs-lisp :tangle yes
+;; (use-package corfu
+;;   :config (global-corfu-mode)
+;;   :custom
+;;   (corfu-auto t)
+;;   (corfu-cycle t)
+;;   (corfu-separator ?\s)
+;;   (corfu-quit-no-match t))
 #+end_src
 ** Vterm
 #+begin_src emacs-lisp :tangle yes
@@ -282,14 +302,13 @@ The package already comes builtin, so we only instantiate it to define the hooks
 It also relies on python lsp server with builtin ruff support.
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
-(add-hook 'python-ts-mode-hook #'eglot-ensure)
+;; (add-hook 'python-ts-mode-hook #'eglot-ensure)
 #+end_src
 
 ** Nix
 #+begin_src emacs-lisp :tangle yes
 (use-package nix-ts-mode
-  :mode "\\.nix\\'"
-  :hook (nix-ts-mode . eglot-ensure))
+  :mode "\\.nix\\'")
 ;; (add-hook 'nix-ts-mode-hook #'eglot-ensure)
 ;; (use-package nix-mode
 ;;   
@@ -299,7 +318,7 @@ It also relies on python lsp server with builtin ruff support.
 Try to use the package.
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
-(add-hook 'rust-ts-mode-hook #'eglot-ensure)
+;; (add-hook 'rust-ts-mode-hook #'eglot-ensure)
 
 (setq rust-ts-mode-indent-offset 2)
 #+end_src
@@ -331,7 +350,8 @@ Try to use the package.
 #+begin_src emacs-lisp :tangle yes
 (use-package proof-general
   :custom
-  (proof-splash-enable nil))
+  (proof-splash-enable nil)
+  (proof-script-fly-past-comments t))
 
 (use-package company-coq
   :hook (coq-mode . company-coq-mode))
