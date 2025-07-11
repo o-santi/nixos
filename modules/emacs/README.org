@@ -47,7 +47,7 @@ I'm currently testing both ~modus-themes~ and ~ef-themes~, and I love DejaVu San
 (use-package modus-themes)
 (use-package ef-themes)
 ;; (use-package kanagawa-theme)
-(load-theme 'ef-melissa-dark t)
+(load-theme 'ef-dream t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
@@ -70,19 +70,19 @@ This avoids emacs from saving backup files in the current directory, by instead 
 #+end_src
 
 * Utility
-** Diminish minor modes
+** Delight minor modes
 
-I like having a relatively clean 
+I like having a relatively clean mode line.
 
 #+begin_src emacs-lisp :tangle yes
-(use-package diminish)
+(use-package delight)
 (use-package autorevert
   :ensure nil
-  :diminish auto-revert-mode)
+  :delight)
 (use-package flymake
-  :diminish)
+  :delight)
 (use-package eldoc
-  :diminish)
+  :delight)
 #+end_src
 ** Searching
 #+begin_src emacs-lisp :tangle yes
@@ -121,7 +121,7 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 
 (use-package nerd-icons-dired
   :hook (dired-mode . nerd-icons-dired-mode)
-  :diminish nerd-icons-dired
+  :delight nerd-icons-dired
   :custom (dired-listing-switches "-alh"))
 
 #+end_src
@@ -142,7 +142,7 @@ Configurations for magit
 (use-package magit
   :custom (magit-process-finish-apply-ansi-colors t))
 (use-package magit-delta
-  :diminish
+  :delight
   :hook (magit-mode . magit-delta-mode))
 (use-package eldoc-diffstat
   :config (global-eldoc-diffstat-mode))
@@ -220,49 +220,57 @@ Better help defaults
 ** Eglot
 Language server support. Already comes installed but used to configure additional language servers.
 #+begin_src emacs-lisp :tangle yes
-;; (use-package eglot
-;;   :ensure nil
-;;   :diminish eglot
-;;   :bind (("C-c a" . eglot-code-actions)
-;;          ("C-c r" . eglot-rename))
-;;   :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
+(use-package eglot
+  :ensure nil
+  :delight
+  :bind (("C-c a" . eglot-code-actions)
+         ("C-c r" . eglot-rename))
+  :hook (eglot-managed-mode . eglot-inlay-hints-mode)
+  :config
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 
 ;; (use-package eglot-booster
 ;;   :after eglot
-;;   
+  
 ;;   :config (eglot-booster-mode))
 #+end_src
 
 ** LSP bridge
-eglot does not seem to like basedpyright, so I'd like to try lsp bridge and see if it works instead.
+# eglot does not seem to like basedpyright, so I'd like to try lsp bridge and see if it works instead.
 #+begin_src emacs-lisp :tangle yes
-(use-package lsp-bridge
-  :init (global-lsp-bridge-mode)
-  :diminish lsp-bridge
-  :bind (("M-." . lsp-bridge-find-def)
-         ("M-," . lsp-bridge-find-def-return)
-         ("M-?" . lsp-bridge-find-references)
-         ("C-c a" . lsp-bridge-code-action)
-         ("C-c r" . lsp-bridge-rename))
-  :custom
-  (lsp-bridge-enable-inlay-hint t)
-  (lsp-bridge-enable-hover-diagnostic t)
-  (lsp-bridge-python-multi-lsp-server 'basedpyright_ruff)
-  (lsp-bridge-python-lsp-server 'basedpyright)
-  (lsp-bridge-nix-lsp-server 'nil))
+;; (use-package lsp-bridge
+;;   :init (global-lsp-bridge-mode)
+;;   :delight lsp-bridge
+;;   :hook (envrc-mode . lsp-bridge-restart-process)
+;;   :bind (("M-." . lsp-bridge-find-def)
+;;          ("M-," . lsp-bridge-find-def-return)
+;;          ("M-?" . lsp-bridge-find-references)
+;;          ("C-c a" . lsp-bridge-code-action)
+;;          ("C-c r" . lsp-bridge-rename)
+;;          ("C-c h" . lsp-bridge-show-documentation))
+;;   :custom
+;;   (lsp-bridge-enable-inlay-hint t)
+;;   (lsp-bridge-enable-hover-diagnostic t)
+;;   (lsp-bridge-python-multi-lsp-server 'basedpyright_ruff)
+;;   (lsp-bridge-python-lsp-server 'basedpyright)
+;;   (lsp-bridge-nix-lsp-server "nil")
+;;   (acm-enable-doc-markdown-render nil)
+;;   (acm-enable-icon nil))
 #+end_src
-
 
 ** Corfu
 Completion popup system. DISABLED for acm, which is the default from lsp-bridge. 
 #+begin_src emacs-lisp :tangle yes
-;; (use-package corfu
-;;   :config (global-corfu-mode)
-;;   :custom
-;;   (corfu-auto t)
-;;   (corfu-cycle t)
-;;   (corfu-separator ?\s)
-;;   (corfu-quit-no-match t))
+(use-package corfu
+  :config
+  (global-corfu-mode)
+  (corfu-popupinfo-mode 1)
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  (corfu-separator ?\s)
+  (corfu-popupinfo-delay 0.25)
+  (corfu-quit-no-match t))
 #+end_src
 ** Vterm
 #+begin_src emacs-lisp :tangle yes
@@ -302,14 +310,14 @@ The package already comes builtin, so we only instantiate it to define the hooks
 It also relies on python lsp server with builtin ruff support.
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
-;; (add-hook 'python-ts-mode-hook #'eglot-ensure)
+(add-hook 'python-ts-mode-hook #'eglot-ensure)
 #+end_src
 
 ** Nix
 #+begin_src emacs-lisp :tangle yes
 (use-package nix-ts-mode
   :mode "\\.nix\\'")
-;; (add-hook 'nix-ts-mode-hook #'eglot-ensure)
+(add-hook 'nix-ts-mode-hook #'eglot-ensure)
 ;; (use-package nix-mode
 ;;   
 ;;   :hook (nix-mode . eglot-ensure))
@@ -318,7 +326,7 @@ It also relies on python lsp server with builtin ruff support.
 Try to use the package.
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
-;; (add-hook 'rust-ts-mode-hook #'eglot-ensure)
+(add-hook 'rust-ts-mode-hook #'eglot-ensure)
 
 (setq rust-ts-mode-indent-offset 2)
 #+end_src
@@ -361,7 +369,7 @@ Try to use the package.
 #+begin_src emacs-lisp :tangle yes
 (use-package org
   :hook (org-mode . org-indent-mode)
-  :diminish org-indent-mode
+  :delight org-indent-mode
   :config
   (setopt text-mode-ispell-word-completion nil)
   (add-to-list 'org-src-lang-modes '("rust" . rust-ts))
