@@ -19,7 +19,6 @@ in {
       description = "leonardo";
       extraGroups = [ "networkmanager" "wheel" ];
     };
-    programs.ssh.startAgent = true;
     services.openssh = {
       enable = true;
       settings = {

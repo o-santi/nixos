@@ -33,6 +33,7 @@ in
         tree-sitter-nix
         tree-sitter-haskell
         tree-sitter-yaml
+        tree-sitter-typst
       ]))
     ] ++ outside-emacs;
   }

@@ -364,6 +364,13 @@ Try to use the package.
 (use-package company-coq
   :hook (coq-mode . company-coq-mode))
 #+end_src
+
+** Typst
+
+#+begin_src emacs-lisp :tangle yes
+(use-package typst-ts-mode)
+#+end_src
+
 * Personal
 ** Org mode
 #+begin_src emacs-lisp :tangle yes

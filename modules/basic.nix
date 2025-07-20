@@ -30,7 +30,6 @@
         options = "--delete-older-than 30d";
       };
     };
-    system.switch.enableNg = true;
 
     nixpkgs = {
       config.allowUnfree = true;
