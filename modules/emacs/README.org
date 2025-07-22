@@ -47,7 +47,7 @@ I'm currently testing both ~modus-themes~ and ~ef-themes~, and I love DejaVu San
 (use-package modus-themes)
 (use-package ef-themes)
 ;; (use-package kanagawa-theme)
-(load-theme 'ef-dream t)
+(load-theme 'tango-dark t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
@@ -229,10 +229,9 @@ Language server support. Already comes installed but used to configure additiona
   :config
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 
-;; (use-package eglot-booster
-;;   :after eglot
-  
-;;   :config (eglot-booster-mode))
+(use-package eglot-booster
+  :after eglot
+  :config (eglot-booster-mode))
 #+end_src
 
 ** LSP bridge
@@ -366,9 +365,13 @@ Try to use the package.
 #+end_src
 
 ** Typst
-
 #+begin_src emacs-lisp :tangle yes
-(use-package typst-ts-mode)
+(use-package typst-ts-mode
+  :hook (typst-ts-mode . eglot-ensure)
+  :config
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist"))))
+  (setq-default eglot-workspace-configuration '(:tinymist (:lint (:enabled t)))))
 #+end_src
 
 * Personal

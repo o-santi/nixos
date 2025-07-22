@@ -3,8 +3,9 @@
     git
     nil
     ripgrep
-    emacs-lsp-booster
+    tinymist
     delta
+    emacs-lsp-booster
   ];
 in 
   pkgs.emacsWithPackagesFromUsePackage {

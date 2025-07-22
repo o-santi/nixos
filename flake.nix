@@ -1,7 +1,7 @@
 {
   description = "My personal devices' flake modules";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/e752bd719cf334c45127ec06f700eac81154b011";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager.url = "github:nix-community/home-manager";
     agenix = {
