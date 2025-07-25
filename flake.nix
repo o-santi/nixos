@@ -30,6 +30,7 @@
     for-all-systems = f:
       nixpkgs.lib.genAttrs [
         "x86_64-linux"
+        "arrch64-linux"
         "aarch64-darwin"
       ] (system: f (import nixpkgs {
         overlays = [ inputs.emacs-overlay.overlays.default ];
@@ -49,7 +50,7 @@
   in rec {
     nixosConfigurations = listToAttrs nixos-configs;
     packages = for-all-systems (pkgs: {
-      emacs = pkgs.callPackage ./modules/emacs/package.nix;
+      emacs = pkgs.callPackage ./modules/emacs/package.nix {};
     });
     deploy.nodes.iori = {
       hostname = "ssh.santi.net.br";
