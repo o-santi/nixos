@@ -11,10 +11,10 @@ in
   pkgs.emacsWithPackagesFromUsePackage {
     package = pkgs.emacs-unstable.override {
       withGTK3 = pkgs.stdenv.isLinux;
-      withNativeCompilation = true;
       withAlsaLib = pkgs.stdenv.isLinux;
       withSystemd = pkgs.stdenv.isLinux;
-      withToolkitScrollBars = pkgs.stdenv.isLinux;
+      withToolkitScrollBars = true;
+      withNativeCompilation = true;
       withImageMagick = true;
     };
     override = epkgs: let
