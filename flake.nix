@@ -19,14 +19,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     deploy-rs.url = "github:serokell/deploy-rs";
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, deploy-rs, ... } @ inputs : let
+  outputs = { self, nixpkgs, deploy-rs, nix-darwin, ... } @ inputs : let
     inherit (builtins) readDir attrNames listToAttrs split head;
-    pkgs = import nixpkgs {
-      overlays = [ inputs.emacs-overlay.overlays.default ];
-      system = "x86_64-linux";
-    };
+    for-all-systems = f:
+      nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ] (system: f (import nixpkgs {
+        overlays = [ inputs.emacs-overlay.overlays.default ];
+        inherit system;
+      }));
     mods = map (p: ./modules/${p}) (attrNames (readDir ./modules));
     make-config-named = host: nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
@@ -40,7 +48,9 @@
     nixos-configs = map (h: { name= h; value = make-config-named h;}) hosts-names;
   in rec {
     nixosConfigurations = listToAttrs nixos-configs;
-    packages.x86_64-linux.emacs = pkgs.callPackage ./modules/emacs/package.nix {};
+    packages = for-all-systems (pkgs: {
+      emacs = pkgs.callPackage ./modules/emacs/package.nix;
+    });
     deploy.nodes.iori = {
       hostname = "ssh.santi.net.br";
       remoteBuild = true;
@@ -49,6 +59,12 @@
         user = "root";
         path = deploy-rs.lib.aarch64-linux.activate.nixos nixosConfigurations.iori;
       };
+    };
+    darwinConfigurations.nami = nix-darwin.lib.darwinSystem {
+      modules = [
+        inputs.home-manager.darwinModules.home-manager
+        ./hosts/nami.nix
+      ] ++ mods;
     };
   };
 }
