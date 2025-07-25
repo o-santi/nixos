@@ -61,6 +61,7 @@
       };
     };
     darwinConfigurations.nami = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
       modules = [
         inputs.home-manager.darwinModules.home-manager
         ./hosts/nami.nix
