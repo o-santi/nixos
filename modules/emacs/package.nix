@@ -12,7 +12,7 @@ in
     package = pkgs.emacs-unstable.override {
       withGTK3 = true;
       withNativeCompilation = true;
-      withAlsaLib = true;
+      withAlsaLib = pkgs.stdenv.isLinux;
       withSystemd = true;
       withToolkitScrollBars = true;
       withImageMagick = true;
