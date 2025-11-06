@@ -12,12 +12,13 @@ in {
     environment.systemPackages = with pkgs; [
       deploy-rs
       jujutsu
+      nh
     ];
     users.mutableUsers = false;
     users.users.leonardo = {
       isNormalUser = true;
       description = "leonardo";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" ];
     };
     services.openssh = {
       enable = true;

@@ -7,7 +7,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
   santi-modules.desktop-environment.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
   # Bootloader.
   boot = {
     loader = {
@@ -46,6 +45,8 @@
       fsType = "vfat";
     };
   };
+
+  programs.nix-ld.enable = true;
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/1a204e5c-05cb-4e7f-b859-927fb024fb12"; }

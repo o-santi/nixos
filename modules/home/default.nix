@@ -20,9 +20,8 @@ in {
           packages = lib.optionals cfg.desktop-environment.enable (with pkgs; [
             legcord
             slack
-            whatsapp-for-linux
+            wasistlos
             telegram-desktop
-            beeper
           ]);
         };
         programs = {
