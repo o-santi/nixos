@@ -49,14 +49,5 @@
       LC_TELEPHONE = "pt_BR.UTF-8";
       LC_TIME = "pt_BR.UTF-8";
     };
-
-    services.xserver = {
-      enable = true;
-      xkb = {
-        variant = "abnt2";
-        layout = "br";
-      };
-    };
-    console.keyMap = "br-abnt2";
   };
 }

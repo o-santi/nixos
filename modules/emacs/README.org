@@ -373,6 +373,11 @@ Try to use the package.
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist"))))
   (setq-default eglot-workspace-configuration '(:tinymist (:lint (:enabled t)))))
 #+end_src
+** TypeScript
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-hook 'typescript-ts-mode-hook #'eglot-ensure)
+#+end_src
 
 * Personal
 ** Org mode
@@ -459,10 +464,12 @@ Helper functions, to try to discover which mail pertains to which account.
 (defun university-p (msg)
   (string-prefix-p "/university/" (mu4e-message-field msg :maildir)))
 (defun work-p (msg)
-  (string-prefix-p "/work/" (mu4e-message-field msg :maildir)))
+  (string-prefix-p "/supabase/" (mu4e-message-field msg :maildir)))
 #+end_src
 Actual mu4e definition
 #+begin_src emacs-lisp :tangle yes
+(setq mm-discouraged-alternatives '("text/html" "text/richtext"))
+;; prefer plain text whenever possible
 (use-package mu4e
   :bind ("C-c m" . mu4e)
   :config
@@ -471,39 +478,40 @@ Actual mu4e definition
   (mu4e-sent-messages-behavior 'delete)
   (mu4e-index-cleanup t)
   (mu4e-index-lazy-check nil)
-  (mu4e-use-fancy-chars nil)
+  (mu4e-use-fancy-chars t)
   (mu4e-confirm-quit nil)
   (mu4e-eldoc-support t)
+  (mu4e-headers-precise-alignment t)
   (mu4e-change-filenames-when-moving t)
   (mu4e-update-interval (* 5 60))
-  (mu4e-get-mail-command "parallel mbsync ::: personal work university")
+  (mu4e-get-mail-command "mbsync -a")
   (mu4e-compose-format-flowed t)
   (mu4e-headers-fields
-   '((:human-date . 10)
+   '((:human-date . 12)
      (:flags . 6)
-     (:topic . 10)
+     (:topic . 12)
      (:from-or-to . 22)
      (:subject . nil)))
   (mu4e-drafts-folder (lambda (msg)
                         (cond
                          ((personal-p msg)   "/personal/[Gmail]/Rascunhos")
                          ((university-p msg) "/university/[Gmail]/Rascunhos")
-                         ((work-p msg)       "/work/[Gmail]/Drafts"))))
+                         ((work-p msg)       "/supabase/[Gmail]/Drafts"))))
   (mu4e-sent-folder (lambda (msg)
                       (cond
                        ((personal-p msg)   "/personal/[Gmail]/Enviados")
                        ((university-p msg) "/university/[Gmail]/Enviados")
-                       ((work-p msg)       "/work/[Gmail]/Sent"))))
+                       ((work-p msg)       "/supabase/[Gmail]/Sent"))))
   (mu4e-refile-folder (lambda (msg)
                         (cond
                          ((personal-p msg)   "/personal/[Gmail]/Todos\ os\ e-mails")
                          ((university-p msg) "/university/[Gmail]/Todos\ os\ e-mails")
-                         ((work-p msg)       "/work/[Gmail]/All\ mail"))))
+                         ((work-p msg)       "/supabase/[Gmail]/All\ mail"))))
   (mu4e-trash-folder  (lambda (msg)
                         (cond
                          ((personal-p msg)   "/personal/[Gmail]/Lixeira")
                          ((university-p msg) "/university/[Gmail]/Lixeira")
-                         ((work-p msg)       "/work/[Gmail]/Trash"))))
+                         ((work-p msg)       "/supabase/[Gmail]/Trash"))))
   :config
   (add-hook 'mu4e-compose-mode-hook #'(lambda () (auto-save-mode -1)))
   (add-to-list 'display-buffer-alist
@@ -511,7 +519,7 @@ Actual mu4e definition
                   display-buffer-same-window)) ; to avoid opening in full frame everytime.
   (add-to-list 'mu4e-bookmarks
                '(:name "Inboxes"
-                 :query "m:/personal/Inbox OR m:/work/Inbox OR m:/university/Inbox"
+                 :query "m:/personal/Inbox OR m:/supabase/Inbox OR m:/university/Inbox"
                  :key ?i))
   (add-to-list 'mu4e-header-info-custom
                '(:topic 
@@ -521,6 +529,6 @@ Actual mu4e definition
                              (cond
                               ((personal-p msg)   "Personal")
                               ((university-p msg) "University")
-                              ((work-p msg)       "Work"))))))
+                              ((work-p msg)       "Supabase"))))))
 #+end_src
 

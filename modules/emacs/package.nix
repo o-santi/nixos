@@ -34,6 +34,8 @@ in
         tree-sitter-haskell
         tree-sitter-yaml
         tree-sitter-typst
+        tree-sitter-typescript
+        tree-sitter-tsx
       ]))
     ] ++ outside-emacs;
   }

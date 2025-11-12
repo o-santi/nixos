@@ -22,5 +22,13 @@
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+    services.xserver = {
+      enable = true;
+      xkb = {
+        variant = "abnt2";
+        layout = "br";
+      };
+    };
+    console.keyMap = "br-abnt2";
   };
 }
