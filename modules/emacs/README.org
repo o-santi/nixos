@@ -357,6 +357,7 @@ Try to use the package.
 #+begin_src emacs-lisp :tangle yes
 (use-package proof-general
   :custom
+  (proof-three-window-mode-policy 'hybrid)
   (proof-splash-enable nil)
   (proof-script-fly-past-comments t))
 
