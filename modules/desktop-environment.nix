@@ -12,7 +12,6 @@
       zen-browser.enable = true;
       nushell.enable = true;
     };
-
     services.printing.enable = false; # disabled until CUPS CVE is fixed
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;

@@ -40,6 +40,7 @@ Disables menu mode, tool bar mode and scroll bar mode, leaving a bare bones emac
 (setq mac-option-modifier 'meta)
 (setq mac-right-option-modifier 'none)
 (setq mac-command-modifier 'meta)
+(setq switch-to-buffer-obey-display-actions t)
 #+end_src
 
 ** Themes and font
@@ -50,16 +51,15 @@ I'm currently testing both ~modus-themes~ and ~ef-themes~, and I love DejaVu San
 (use-package modus-themes)
 (use-package ef-themes)
 ;; (use-package kanagawa-theme)
-(load-theme 'modus-operandi-tinted t)
+(load-theme 'tango-dark t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
             (select-frame frame)
-            (set-frame-font "DejaVuSansM Nerd Font 16" nil t)))
+            (set-frame-font "DejaVuSansM Nerd Font 14" nil t)))
 #+end_src
 
 ** Backups
-
 This avoids emacs from saving backup files in the current directory, by instead putting them in the =~/.saves= directory.
 
 #+begin_src emacs-lisp :tangle yes

@@ -48,6 +48,7 @@
         tapping = true;
         scrollMethod = "twofinger";
         clickMethod = "clickfinger";
+        naturalScrolling = true;
         tappingButtonMap = "lrm";
       };
     };
@@ -63,6 +64,11 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
   };
+  programs.nix-ld.enable = true;
+  virtualisation.docker = {
+    enable = true;
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   system.stateVersion = "23.11"; 
