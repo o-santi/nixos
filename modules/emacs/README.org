@@ -69,6 +69,14 @@ This avoids emacs from saving backup files in the current directory, by instead 
    version-control t)
 #+end_src
 
+** Improve movement
+#+begin_src emacs-lisp :tangle yes
+(use-package guru-mode
+  :delight
+  :config (guru-global-mode +1))
+#+end_src
+
+
 * Utility
 ** Delight minor modes
 
@@ -121,7 +129,7 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 
 (use-package nerd-icons-dired
   :hook (dired-mode . nerd-icons-dired-mode)
-  :delight nerd-icons-dired
+  :delight
   :custom (dired-listing-switches "-alh"))
 
 #+end_src
@@ -129,6 +137,7 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 To integrate with nix shells.
 #+begin_src emacs-lisp :tangle yes
 (use-package envrc
+  :delight
   :config
   (envrc-global-mode)
   ;; HACK: add emacs' `exec-path` back to `PATH` in order to keep
@@ -210,7 +219,7 @@ Better help defaults
   (global-set-key (kbd "C-h k") #'helpful-key))
 
 (use-package which-key
-  :dimish which-key-mode
+  :delight
   :config (which-key-mode))
 #+end_src
 ** Bind key
