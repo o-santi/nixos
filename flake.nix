@@ -42,6 +42,7 @@
       modules = [
         ./hosts/${host}.nix
         inputs.home-manager.nixosModules.default
+        inputs.agenix.nixosModules.default
       ] ++ mods;
     };
     get-basename = n: head (split "\\." n);
@@ -62,11 +63,13 @@
       };
     };
     darwinConfigurations.nami = nix-darwin.lib.darwinSystem {
+      specialArgs = { inherit inputs; };
       system = "aarch64-darwin";
       modules = [
         inputs.home-manager.darwinModules.home-manager
+        inputs.agenix.darwinModules.default
         ./hosts/nami.nix
-      ] ++ mods;
+      ];
     };
   };
 }

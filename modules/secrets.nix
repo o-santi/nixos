@@ -1,11 +1,7 @@
-{ config, lib, inputs, pkgs, ...}: with lib; let
+{ config, lib, pkgs, ...}: with lib; let
   cfg = config.santi-modules;
   inherit (builtins) readFile attrValues;
 in {
-  imports = [
-    inputs.agenix.nixosModules.default
-    inputs.home-manager.nixosModules.home-manager
-  ];
   options.santi-modules = { 
     secrets.enable = mkOption {
       type = types.bool;
@@ -17,13 +13,16 @@ in {
     environment.systemPackages = with pkgs; [
       rage
     ];
-    home-manager.users.leonardo.home.file.".ssh/id_ed25519.pub".source = ../secrets/user-ssh-key.pub;
+    home-manager.sharedModules = [(home-args: {
+      home.file.".ssh/id_ed25519.pub".source = ../secrets/user-ssh-key.pub;
+    })];
     users.users.leonardo = {
-      hashedPasswordFile = config.age.secrets.user-pass.path;
       openssh.authorizedKeys.keys = [
         (readFile ../secrets/user-ssh-key.pub)
       ] ++ attrValues (import ../secrets/host-pub-keys.nix);
-    };
+    } // (lib.optionalAttrs pkgs.stdenv.isLinux {
+      hashedPasswordFile = config.age.secrets.user-pass.path;
+    });
     age.secrets = let
       with-perms = name: {
         file = ../secrets/${name}.age;

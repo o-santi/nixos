@@ -5,6 +5,10 @@ in {
   options.santi-modules.emacs.enable = mkEnableOption "Enable emacs configuration";
   config = mkIf config.santi-modules.emacs.enable {
     nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
+    services.emacs = {
+      enable = true;
+      package = emacs;
+    };
     environment.systemPackages = [
       emacs
     ];

@@ -17,7 +17,7 @@ Though you probably shouldn't, because it will most likely build all of emacs fr
 Disables menu mode, tool bar mode and scroll bar mode, leaving a bare bones emacs. Also sets up some relevant stats in the buffer, like column number mode, line number mode and ~indicate-empty-lines~. I like ~window-combination-resize~ too, so I enable that.
 
 #+begin_src emacs-lisp :tangle yes
-(menu-bar-mode -1)
+(menu-bar-mode +1)
 (tool-bar-mode -1)
 (set-scroll-bar-mode nil)
 
@@ -27,7 +27,7 @@ Disables menu mode, tool bar mode and scroll bar mode, leaving a bare bones emac
 (line-number-mode +1)
 (column-number-mode +1)
 
-(setq default-frame-alist '((fullscreen . maximized) (vertical-scroll-bars . nil) (undecorated . t)))
+(setq default-frame-alist '((fullscreen . maximized) (vertical-scroll-bars . nil)))
 (setq use-short-answers t)
 (setq inhibit-startup-message t)
 (setq-default indicate-empty-lines t)
@@ -37,6 +37,9 @@ Disables menu mode, tool bar mode and scroll bar mode, leaving a bare bones emac
               indent-tabs-mode nil)
 
 (setq window-combination-resize t)
+(setq mac-option-modifier 'meta)
+(setq mac-right-option-modifier 'none)
+(setq mac-command-modifier 'meta)
 #+end_src
 
 ** Themes and font
@@ -52,7 +55,7 @@ I'm currently testing both ~modus-themes~ and ~ef-themes~, and I love DejaVu San
 (add-hook 'after-make-frame-functions
           (lambda (frame)
             (select-frame frame)
-            (set-frame-font "DejaVuSansM Nerd Font 13" nil t)))
+            (set-frame-font "DejaVuSansM Nerd Font 16" nil t)))
 #+end_src
 
 ** Backups
@@ -129,9 +132,9 @@ Configuration to automagically open age files, and to encrypt them correctly to 
 
 (use-package nerd-icons-dired
   :hook (dired-mode . nerd-icons-dired-mode)
-  :delight
-  :custom (dired-listing-switches "-alh"))
-
+  :delight nerd-icons-dired
+  :custom (dired-listing-switches "-alh")
+  (dired-use-ls-dired 'unspecified))
 #+end_src
 ** Direnv
 To integrate with nix shells.

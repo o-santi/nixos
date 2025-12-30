@@ -1,59 +1,19 @@
-{ config, lib, inputs, pkgs, ...}: with lib; let
-  cfg = config.santi-modules;
+{ lib, config, ...}: let
+  inherit (lib) mkIf mkEnableOption;
 in {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
+  imports = [   
     ./mu.nix
     ./zen.nix
     ./nushell.nix
+    ./git.nix
+    ./programs.nix
   ];
-  config = mkIf cfg.default-user.enable {
+  options.santi-modules.home.enable = mkEnableOption "Enable zen browser from flake";
+  config = mkIf config.santi-modules.home.enable {
     home-manager = {
       backupFileExtension = "backup";
       useGlobalPkgs = true;
       useUserPackages = true;
-      users.leonardo = {
-        home = {
-          shell.enableNushellIntegration = true;
-          stateVersion = "23.05";
-          homeDirectory = "/home/leonardo";
-          packages = lib.optionals cfg.desktop-environment.enable (with pkgs; [
-            legcord
-            slack
-            wasistlos
-            telegram-desktop
-          ]);
-        };
-        programs = {
-          direnv = {
-            enable = true;
-            nix-direnv.enable = true;
-          };
-          git = {
-            enable = true;
-            lfs.enable = true;
-            difftastic.enable = true;
-            settings = {
-              github.user = "o-santi";
-              user = {
-                name = "Leonardo Santiago";
-                email = "leonardo.ribeiro.santiago@gmail.com";
-                signingkey = "~/.ssh/id_ed25519";
-              };
-              color.ui = true;
-              gpg.format = "ssh";
-              commit.gpgsign = true;
-              "merge \"mergigraf\"" = {
-                name = "mergigraf";
-                driver = "${pkgs.mergiraf}/bin/mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
-              };
-            };
-            attributes = [
-              "* merge=mergigraf"
-            ];
-          };
-        };
-      };
     };
-  };  
+  };
 }
