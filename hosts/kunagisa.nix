@@ -16,7 +16,6 @@
     };
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" ];
-      kernelModules = [ "amdgpu" ];
     };
     binfmt.emulatedSystems = [ "aarch64-linux" ];
     kernelModules = [ "kvm-amd" ];
@@ -51,10 +50,13 @@
   swapDevices = [
     { device = "/dev/disk/by-uuid/1a204e5c-05cb-4e7f-b859-927fb024fb12"; }
   ];
+  environment.variables.AMD_VULKAN_ICD = "RADV";
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.amdgpu.initrd.enable = true;
+  services.lact.enable = true;
   system.stateVersion = "23.05";
 }

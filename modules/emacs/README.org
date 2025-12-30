@@ -50,7 +50,7 @@ I'm currently testing both ~modus-themes~ and ~ef-themes~, and I love DejaVu San
 (use-package modus-themes)
 (use-package ef-themes)
 ;; (use-package kanagawa-theme)
-(load-theme 'tango-dark t)
+(load-theme 'modus-operandi-tinted t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
@@ -241,6 +241,19 @@ Language server support. Already comes installed but used to configure additiona
   :config
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 
+(setq-default
+   eglot-workspace-configuration
+   '( ;; python
+     :basedpyright (:disableOrganizeImports t)
+     :basedpyright.analysis
+     (:typeCheckingMode
+      "all"
+      :autoImportCompletions t
+      :inlayHints (:callArgumentNamesMatching t)
+      :useTypingExtensions t)
+     ;;
+     ))
+
 (use-package eglot-booster
   :after eglot
   :config (eglot-booster-mode))
@@ -301,8 +314,7 @@ Add support for ansi escape codes in compilation
 (use-package pdf-tools
   :defer t
   :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1)))
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :magic ("%PDF" . pdf-view-mode))
+  :init (pdf-tools-install))
 #+end_src
 ** View Large Files
 Minor mode to allow opening files in chunks
@@ -381,6 +393,7 @@ Try to use the package.
 #+begin_src emacs-lisp :tangle yes
 (use-package typst-ts-mode
   :hook (typst-ts-mode . eglot-ensure)
+  :custom (typst-ts-mode-enable-raw-blocks-highlight t)
   :config
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist"))))
@@ -391,6 +404,11 @@ Try to use the package.
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
 (add-hook 'typescript-ts-mode-hook #'eglot-ensure)
 #+end_src
+
+** Go
+#+begin_src emacs-lisp :tangle yes
+(use-package go-mode)
+#+end_src 
 
 * Personal
 ** Org mode
