@@ -6,9 +6,6 @@ in {
     users.users.leonardo.shell = pkgs.nushell;
     home-manager.sharedModules = [(home-args: {
       home.shell.enableNushellIntegration = true;
-      home.file.".zshrc".text = mkIf pkgs.stdenv.isDarwin ''
-        SHELL=${lib.getExe pkgs.nushell} exec "$SHELL"
-      '';
       programs.direnv = {
         enable = true;
         enableNushellIntegration = true;
@@ -55,6 +52,10 @@ in {
         '';
       };
 
+    } // mkIf pkgs.stdenv.isDarwin {
+      home.file.".zshrc".source = ''
+        SHELL=${lib.getExe pkgs.nushell} exec "$SHELL"
+      '';
     })];
   };
 }

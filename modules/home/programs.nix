@@ -13,7 +13,6 @@ in {
         slack
         whatsapp-for-linux
         telegram-desktop
-        beeper
       ]);
   };
 }

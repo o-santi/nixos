@@ -1,5 +1,6 @@
-{ lib, config, ...}: let
+{ lib, config, pkgs, ...}: let
   inherit (lib) mkIf mkEnableOption;
+  cfg = config.santi-modules;
 in {
   imports = [   
     ./mu.nix
@@ -16,47 +17,8 @@ in {
       useUserPackages = true;
       users.leonardo = {
         home = {
-          shell.enableNushellIntegration = true;
           stateVersion = "23.05";
           homeDirectory = "/home/leonardo";
-          packages = lib.optionals cfg.desktop-environment.enable (with pkgs; [
-            legcord
-            slack
-            wasistlos
-            telegram-desktop
-          ]);
-        };
-        programs = {
-          direnv = {
-            enable = true;
-            nix-direnv.enable = true;
-          };
-          difftastic = {
-            enable = true;
-            git.enable = true;
-          };
-          git = {
-            enable = true;
-            lfs.enable = true;
-            settings = {
-              github.user = "o-santi";
-              user = {
-                name = "Leonardo Santiago";
-                email = "leonardo.ribeiro.santiago@gmail.com";
-                signingkey = "~/.ssh/id_ed25519";
-              };
-              color.ui = true;
-              gpg.format = "ssh";
-              commit.gpgsign = true;
-              "merge \"mergigraf\"" = {
-                name = "mergigraf";
-                driver = "${pkgs.mergiraf}/bin/mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
-              };
-            };
-            attributes = [
-              "* merge=mergigraf"
-            ];
-          };
         };
       };
     };

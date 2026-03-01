@@ -12,7 +12,7 @@ in {
         enable = true;
         lfs.enable = true;
         difftastic.enable = true;
-        extraConfig = {
+        settings = {
           github.user = "o-santi";
           user = {
             name = "Leonardo Santiago";

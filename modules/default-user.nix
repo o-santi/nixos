@@ -27,5 +27,6 @@ in {
         PasswordAuthentication = false;
       };
     };
+    santi-modules.services.tailscale.enable = true;
   };
 }

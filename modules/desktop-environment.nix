@@ -11,6 +11,7 @@
       basic.enable = true;
       zen-browser.enable = true;
       nushell.enable = true;
+      home.enable = true;
     };
     services.printing.enable = false; # disabled until CUPS CVE is fixed
     services.pulseaudio.enable = false;
@@ -20,13 +21,6 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-    };
-    services.xserver = {
-      enable = true;
-      xkb = {
-        variant = "abnt2";
-        layout = "br";
-      };
     };
     console.keyMap = "br-abnt2";
   };
