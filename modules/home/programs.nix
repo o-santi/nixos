@@ -1,4 +1,4 @@
-{ config, lib, ...}: with lib; let
+{ config, lib, pkgs, ...}: with lib; let
   cfg = config.santi-modules;
 in {
   options.santi-modules.programs.enable = mkOption {
@@ -11,7 +11,6 @@ in {
       (with pkgs; [
         legcord
         slack
-        whatsapp-for-linux
         telegram-desktop
       ]);
   };

@@ -28,5 +28,6 @@ in {
       };
     };
     santi-modules.services.tailscale.enable = true;
+    santi-modules.nushell.enable = true;
   };
 }

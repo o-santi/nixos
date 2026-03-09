@@ -41,7 +41,6 @@
     power-profiles-daemon.enable = lib.mkDefault true;
     touchegg.enable = true;
     fwupd.enable = true;
-    xserver.videoDrivers = [ "amdgpu" ];
     libinput = {
       enable = true;
       touchpad = {

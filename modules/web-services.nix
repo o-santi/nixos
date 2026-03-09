@@ -33,6 +33,7 @@
       enable = true;
       scanPath = git-repo-path;
       nginx.virtualHost = "git.santi.net.br";
+      gitHttpBackend.checkExportOkFiles = false;
       settings = {
         readme = ":README.org";
         root-title = "index";

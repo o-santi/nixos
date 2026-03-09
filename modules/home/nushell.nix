@@ -4,7 +4,7 @@ in {
   options.santi-modules.nushell.enable = mkEnableOption "Enable nushell as the default shell";
   config = mkIf cfg.nushell.enable {
     users.users.leonardo.shell = pkgs.nushell;
-    home-manager.sharedModules = [(home-args: {
+    home-manager.users.leonardo = {
       home.shell.enableNushellIntegration = true;
       programs.direnv = {
         enable = true;
@@ -52,10 +52,6 @@ in {
         '';
       };
 
-    } // mkIf pkgs.stdenv.isDarwin {
-      home.file.".zshrc".source = ''
-        SHELL=${lib.getExe pkgs.nushell} exec "$SHELL"
-      '';
-    })];
+    };
   };
 }

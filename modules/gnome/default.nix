@@ -31,30 +31,6 @@
   };
   config = mkIf config.santi-modules.gnome.enable {
     programs.dconf.enable = true;
-    environment.gnome.excludePackages = with pkgs; [
-      decibels
-      gnome-font-viewer
-      gnome-connections
-      simple-scan
-      gnome-contacts
-      gnome-photos
-      gnome-tour
-      gnome-notes
-      gnome-text-editor
-      gedit
-      cheese
-      gnome-terminal
-      epiphany # web browser
-      geary # email reader
-      evince # document viewer
-      totem # video player
-      gnome-music
-      gnome-characters
-      tali # poker game
-      iagno # go game
-      hitori # sudoku game
-      atomix # puzzle game
-    ];
     services.displayManager.gdm = {
       enable = true;
       wayland = true;
@@ -65,7 +41,11 @@
     services.gnome = {
       gnome-browser-connector.enable = true;
       gnome-keyring.enable = true;
+      core-apps.enable = false;
+      core-developer-tools.enable = false;
+      games.enable = false;
     };
+    environment.gnome.excludePackages = with pkgs; [ gnome-tour gnome-user-docs ];
     security.pam.services = {
       login.enableGnomeKeyring = true;
       gdm.enableGnomeKeyring = true;

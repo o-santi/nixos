@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ...}: let
+{ lib, config, ...}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.santi-modules;
 in {
@@ -8,9 +8,10 @@ in {
     ./nushell.nix
     ./git.nix
     ./programs.nix
+    ./mpv.nix
   ];
-  options.santi-modules.home.enable = mkEnableOption "Enable zen browser from flake";
-  config = mkIf config.santi-modules.home.enable {
+  options.santi-modules.home.enable = mkEnableOption "Enable home manager options";
+  config = mkIf cfg.home.enable {
     home-manager = {
       backupFileExtension = "backup";
       useGlobalPkgs = true;

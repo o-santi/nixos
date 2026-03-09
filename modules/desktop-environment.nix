@@ -10,8 +10,8 @@
       default-user.enable = true;
       basic.enable = true;
       zen-browser.enable = true;
-      nushell.enable = true;
       home.enable = true;
+      mpv.enable = true;
     };
     services.printing.enable = false; # disabled until CUPS CVE is fixed
     services.pulseaudio.enable = false;

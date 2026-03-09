@@ -7,6 +7,9 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
   santi-modules.desktop-environment.enable = true;
+  santi-modules.gnome.enable = lib.mkForce false;
+  santi-modules.cosmic.enable = lib.mkForce true;
+
   # Bootloader.
   boot = {
     loader = {
