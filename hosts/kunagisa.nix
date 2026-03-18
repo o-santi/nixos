@@ -8,7 +8,7 @@
   ];
   santi-modules.desktop-environment.enable = true;
   santi-modules.gnome.enable = lib.mkForce false;
-  santi-modules.cosmic.enable = lib.mkForce true;
+  santi-modules.kde.enable = lib.mkForce true;
 
   # Bootloader.
   boot = {
@@ -23,6 +23,7 @@
     binfmt.emulatedSystems = [ "aarch64-linux" ];
     kernelModules = [ "kvm-amd" ];
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "systemd.swap=0" ];
     extraModulePackages = [ ];
   };
  
@@ -50,9 +51,7 @@
 
   programs.nix-ld.enable = true;
 
-  swapDevices = [
-    { device = "/dev/disk/by-uuid/1a204e5c-05cb-4e7f-b859-927fb024fb12"; }
-  ];
+  swapDevices = lib.mkForce [ ];
   environment.variables.AMD_VULKAN_ICD = "RADV";
   hardware.graphics = {
     enable = true;

@@ -20,8 +20,7 @@ Disables menu mode, tool bar mode and scroll bar mode, leaving a bare bones emac
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (set-scroll-bar-mode nil)
-(scroll-bar-mode -1)
-(add-to-list default-frame-alist '(undecorated . t))
+
 (add-hook 'window-size-change-functions 'frame-hide-title-bar-when-maximized)
 
 (setq gc-cons-threshold 100000000)
@@ -59,8 +58,10 @@ I'm currently testing both ~modus-themes~ and ~ef-themes~, and I love DejaVu San
 (add-hook 'after-make-frame-functions
           (lambda (frame)
             (select-frame frame)
-            (set-frame-font "DejaVuSansM Nerd Font 14" nil t)))
-(set-frame-font "DejaVuSansM Nerd Font 14" nil t)
+            (set-frame-font "JetBrainsMono Nerd Font Mono 13" nil t)))
+(set-frame-font "JetBrainsMono Nerd Font Mono 13" nil t)
+(set-frame-parameter nil 'alpha-background 85)
+(add-to-list 'default-frame-alist '(alpha-background . 85))
 #+end_src
 
 ** Backups
@@ -356,6 +357,28 @@ Try to use the package.
 (add-hook 'rust-ts-mode-hook #'eglot-ensure)
 
 (setq rust-ts-mode-indent-offset 2)
+#+end_src
+
+** Nushell
+#+begin_src emacs-lisp :tangle yes
+(use-package nushell-mode)
+(require 'smie)
+(setq nushell-smie-grammar
+      (smie-prec2->grammar
+       (smie-bnf->prec2
+        '((exp
+           ("(" exp ")")
+           ("{" exp "}")
+           ("[" exp "]"))))))
+(defun nushell-smie-rules (kind token)
+  (pcase (cons kind token)
+    ;; For each level of nesting, add ~nushell-indent-offset~
+    (`(:elem . basic) nushell-indent-offset)
+    ;; For things that *aren't* nested, don't add any more indentation
+    (`(:list-intro . "") 0)))
+(defun nushell-mode-hook ()
+  (smie-setup nushell-smie-grammar 'nushell-smie-rules))
+(add-hook 'nushell-mode-hook #'nushell-mode-hook)
 #+end_src
 
 ** YAML

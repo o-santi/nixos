@@ -16,6 +16,7 @@
       packages = with pkgs; [
         nerd-fonts.iosevka
         nerd-fonts.fira-code
+        nerd-fonts.jetbrains-mono
         ipafont
         kochi-substitute
         dejavu_fonts

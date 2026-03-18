@@ -14,12 +14,13 @@
     default-user.enable = true;
     nushell.enable = true;
     basic.enable = true;
+    home.enable = true;
     font-config.enable = false;
     services = {
       ddns.enable = true;
       blog.enable = true;
       cgit.enable = true;
-      pizauth.enable = true;
+      immich.enable = true;
     };
   };
   

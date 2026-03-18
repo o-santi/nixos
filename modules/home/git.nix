@@ -8,10 +8,10 @@ in {
   };
   config = mkIf cfg.git.enable {
     home-manager.sharedModules = [(home-args: {
+      programs.difftastic.enable = true;
       programs.git = {
         enable = true;
         lfs.enable = true;
-        difftastic.enable = true;
         settings = {
           github.user = "o-santi";
           user = {

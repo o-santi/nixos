@@ -23,6 +23,11 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = { self, nixpkgs, deploy-rs, nix-darwin, ... } @ inputs : let
@@ -54,7 +59,7 @@
       emacs = pkgs.callPackage ./modules/emacs/package.nix {};
     });
     deploy.nodes.iori = {
-      hostname = "ssh.santi.net.br";
+      hostname = "iori";
       remoteBuild = true;
       interactiveSudo = true;
       profiles.system = {
