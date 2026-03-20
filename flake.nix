@@ -60,7 +60,7 @@
     });
     deploy.nodes.iori = {
       hostname = "iori";
-      remoteBuild = true;
+      remoteBuild = false;
       interactiveSudo = true;
       profiles.system = {
         user = "root";

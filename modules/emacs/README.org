@@ -141,6 +141,15 @@ Configuration to automagically open age files, and to encrypt them correctly to 
   :custom (dired-listing-switches "-alh")
   (dired-use-ls-dired 'unspecified))
 #+end_src
+
+** Dired
+#+begin_src emacs-lisp :tangle yes
+(require 'ls-lisp)
+
+(setq ls-lisp-dirs-first t)
+(setq ls-lisp-use-insert-directory-program nil)
+#+end_src
+
 ** Direnv
 To integrate with nix shells.
 #+begin_src emacs-lisp :tangle yes
@@ -309,9 +318,9 @@ Completion popup system. DISABLED for acm, which is the default from lsp-bridge.
 ** Compilation
 Add support for ansi escape codes in compilation
 #+begin_src emacs-lisp :tangle yes
-(use-package ansi-color
-  :ensure nil
-  :hook (compilation-filter . ansi-color-compilation-filter))
+(setq compilation-environment '("TERM=xterm-256color"))
+(require 'ansi-color)
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 #+end_src
 
 ** Pdf reader

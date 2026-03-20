@@ -7,6 +7,7 @@ in {
       enable = true;
       host = "iori.stomatopod-vibes.ts.net";
       openFirewall = true;
+      machine-learning.enable = false;
     };
   };
 }
