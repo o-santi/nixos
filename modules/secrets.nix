@@ -42,7 +42,7 @@ in {
       mail-cfg = map (n: {name = n; value = with-perms n;}) mails;
     in
       listToAttrs mail-cfg))
-    // (optionalAttrs cfg.services.ddns.enable {
+    // (optionalAttrs cfg.services.cloudflared.enable {
       cloudflare = with-perms "cloudflare";
     }) // (optionalAttrs cfg.emacs.enable {
       authinfo = with-perms "authinfo";

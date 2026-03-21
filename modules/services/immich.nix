@@ -1,13 +1,18 @@
 { config, lib, inputs, pkgs, ... }: with lib; let
-  cfg = config.santi-modules.services;
+  inherit (config.santi-modules.services) immich cloudflared;
+  
 in {
   options.santi-modules.services.immich.enable = mkEnableOption "Enable immich photo server";
-  config = mkIf cfg.immich.enable {
+  config = mkIf immich.enable {
     services.immich = {
       enable = true;
-      host = "iori.stomatopod-vibes.ts.net";
+      host = "localhost";
+      port = 2283;
       openFirewall = true;
       machine-learning.enable = false;
+    };
+    services.nginx.virtualHosts."fotos.${cloudflared.fqdn}" = {
+      locations."/".proxyPass = "http://localhost:2283";
     };
   };
 }

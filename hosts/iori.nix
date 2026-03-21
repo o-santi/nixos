@@ -17,7 +17,7 @@
     home.enable = true;
     font-config.enable = false;
     services = {
-      ddns.enable = true;
+      cloudflared.enable = true;
       blog.enable = true;
       cgit.enable = true;
       immich.enable = true;
