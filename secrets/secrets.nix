@@ -11,4 +11,5 @@ in
   "authinfo.age".publicKeys = keys;
   "user-pass.age".publicKeys = keys;
   "cloudflare.age".publicKeys = keys;
+  "cloudflare-api-token.age".publicKeys = keys;
 }

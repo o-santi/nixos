@@ -21,6 +21,7 @@
       blog.enable = true;
       cgit.enable = true;
       immich.enable = true;
+      vaultwarden.enable = true;
     };
   };
   

@@ -1,13 +1,11 @@
-{ config, lib, inputs, pkgs, ... }: with lib; let
-  cloudflared = config.santi-modules.services.cloudflared;
+{ config, lib, ... }: with lib; let
+  inherit (config.santi-modules.services) cloudflared;
 in {
-  options.santi-modules.services = {
-    cloudflared = {
-      enable = mkEnableOption "Enable ddns service";
-      fqdn = mkOption {
-        type = types.str;
-        default = "santi.net.br";
-      };
+  options.santi-modules.services.cloudflared = {
+    enable = mkEnableOption "Enable ddns service";
+    fqdn = mkOption {
+      type = types.str;
+      default = "santi.net.br";
     };
   };
   config = mkIf cloudflared.enable {
@@ -21,6 +19,20 @@ in {
           "${cloudflared.fqdn}" = "http://localhost:80";
           "git.${cloudflared.fqdn}" = "http://localhost:80";
         };
+      };
+    };
+    security.acme = {
+      acceptTerms = true;
+      defaults = {
+        email = "leonardo.ribeiro.santiago@gmail.com";
+      };
+      certs.${cloudflared.fqdn} = {
+        webroot = null;
+        extraDomainNames = [ "*.${cloudflared.fqdn}" ];
+        group = "nginx";
+        dnsResolver = "1.1.1.1"; # cloudflare dns
+        dnsProvider = "cloudflare";
+        environmentFile = config.age.secrets.cloudflare-api-token.path;
       };
     };
   };

@@ -1,7 +1,4 @@
-{ lib, config, ...}: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.santi-modules;
-in {
+{ lib, config, ...}: {
   imports = [   
     ./blog.nix
     ./cgit.nix
@@ -9,5 +6,6 @@ in {
     ./immich.nix
     ./syncthing.nix
     ./tailscale.nix
+    ./vaultwarden.nix
   ];
 }

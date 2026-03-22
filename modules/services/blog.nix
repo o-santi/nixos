@@ -49,6 +49,13 @@ in {
     networking.firewall.allowedTCPPorts = [ 80 443 ];
     services.nginx = {
       enable = true;
+      recommendedBrotliSettings = true;
+      recommendedGzipSettings   = true;
+      # recommendedZstdSettings   = true; # Unmaintained.
+
+      recommendedOptimisation   = true;
+      recommendedProxySettings  = true;
+      recommendedTlsSettings    = true;
       virtualHosts.${blog.url} = {
         addSSL = true;
         enableACME = true;

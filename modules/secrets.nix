@@ -44,6 +44,7 @@ in {
       listToAttrs mail-cfg))
     // (optionalAttrs cfg.services.cloudflared.enable {
       cloudflare = with-perms "cloudflare";
+      cloudflare-api-token = with-perms "cloudflare-api-token";
     }) // (optionalAttrs cfg.emacs.enable {
       authinfo = with-perms "authinfo";
     });

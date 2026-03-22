@@ -13,13 +13,11 @@
           -M document-css=false
   '';
 in {
-  options.santi-modules.services = {
-    cgit = {
-      enable = mkEnableOption "Enable cgit instance";
-      git-repo-path = mkOption {
-        type = types.str;
-        default = "/server/git-repos";
-      };
+  options.santi-modules.services.cgit = {
+    enable = mkEnableOption "Enable cgit instance";
+    git-repo-path = mkOption {
+      type = types.str;
+      default = "/server/git-repos";
     };
   };
   config = mkIf cgit.enable {
@@ -33,7 +31,7 @@ in {
       openssh.authorizedKeys.keys = [ (builtins.readFile ../../secrets/user-ssh-key.pub)] ++ builtins.attrValues (import ../../secrets/host-pub-keys.nix);
     };
     systemd.tmpfiles.rules = [
-      "d ${cgit.git-repo-path} 0755 git users"
+      "d ${cgit.git-repo-path} 0755 git cgit"
     ];
     services.cgit.santi = {
       enable = true;

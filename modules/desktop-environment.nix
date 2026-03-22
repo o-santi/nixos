@@ -4,7 +4,7 @@
     santi-modules = {
       font-config.enable = true;
       emacs.enable = true;
-      gnome.enable = true;
+      kde.enable = true;
       games.enable = true;
       mu.enable = true;
       default-user.enable = true;
