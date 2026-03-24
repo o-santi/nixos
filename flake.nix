@@ -49,7 +49,7 @@
     make-config-named = host: nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
-        ./hosts/${host}.nix
+        ./hosts/${host}
         inputs.home-manager.nixosModules.default
         inputs.agenix.nixosModules.default
       ] ++ mods;

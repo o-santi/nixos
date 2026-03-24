@@ -38,10 +38,6 @@
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
   };
-
-  users.users.root.openssh.authorizedKeys.keys = [
-    (builtins.readFile ../secrets/user-ssh-key.pub)
-  ];
   
   # Custom services for laptop
   services = {
