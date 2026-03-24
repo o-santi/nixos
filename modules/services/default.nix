@@ -7,5 +7,6 @@
     ./syncthing.nix
     ./tailscale.nix
     ./vaultwarden.nix
+    ./pocket.nix
   ];
 }

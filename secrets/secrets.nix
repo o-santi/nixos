@@ -12,4 +12,5 @@ in
   "user-pass.age".publicKeys = keys;
   "cloudflare.age".publicKeys = keys;
   "cloudflare-api-token.age".publicKeys = keys;
+  "pocket-id.age".publicKeys = keys;
 }

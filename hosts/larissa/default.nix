@@ -5,9 +5,12 @@
 { config, pkgs, lib, inputs, modulesPath,  ... }: {
   imports = [
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+    ./disko.nix
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  hardware.facter.reportPath = ./facter.json;
+  
   santi-modules = {
     desktop-environment.enable = true;
     has-touchpad = true;
@@ -17,7 +20,6 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     initrd = {
-      luks.devices."luks-fc474bfb-2d0a-4a8a-99db-a55e15d8a836".device = "/dev/disk/by-uuid/fc474bfb-2d0a-4a8a-99db-a55e15d8a836";
       availableKernelModules = [
         "nvme"
         "xhci_pci"
@@ -36,6 +38,11 @@
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
   };
+
+  users.users.root.openssh.authorizedKeys.keys = [
+    (builtins.readFile ../secrets/user-ssh-key.pub)
+  ];
+  
   # Custom services for laptop
   services = {
     power-profiles-daemon.enable = lib.mkDefault true;
@@ -52,17 +59,7 @@
       };
     };
   };
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/bd4da861-db3f-4efd-82e1-ca925f8ef873";
-      fsType = "ext4";
-    };
-    "/boot" = {
-      device = "/dev/disk/by-uuid/D40E-FE35";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
-  };
+
   programs.nix-ld.enable = true;
   virtualisation.docker = {
     enable = true;
