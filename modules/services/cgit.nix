@@ -51,6 +51,7 @@ in {
         enable-index-links = true;
         enable-index-owner = false;
         enable-commit-graph = true;
+        enable-http-clone = true;
         remove-suffix = true;
       };
     };

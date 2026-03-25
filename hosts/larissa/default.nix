@@ -34,6 +34,7 @@
   };
 
   networking = {
+    hostId = "9fa8cbe0";
     hostName = "larissa"; 
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;

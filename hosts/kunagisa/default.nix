@@ -6,6 +6,9 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
+
+  hardware.facter.reportPath = ./facter.json;
+  
   santi-modules.desktop-environment.enable = true;
   santi-modules.gnome.enable = lib.mkForce false;
   santi-modules.kde.enable = lib.mkForce true;
@@ -22,7 +25,6 @@
     };
     binfmt.emulatedSystems = [ "aarch64-linux" ];
     kernelModules = [ "kvm-amd" ];
-    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "systemd.swap=0" ];
     extraModulePackages = [ ];
   };
